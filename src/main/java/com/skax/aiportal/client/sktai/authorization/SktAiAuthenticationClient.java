@@ -1,14 +1,16 @@
 package com.skax.aiportal.client.sktai.authorization;
 
+import org.springframework.cloud.openfeign.FeignClient;
+import org.springframework.http.MediaType;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
+
 import com.skax.aiportal.client.sktai.authorization.dto.request.OAuth2LoginRequest;
 import com.skax.aiportal.client.sktai.authorization.dto.request.SystemLoginRequest;
 import com.skax.aiportal.client.sktai.authorization.dto.response.AccessTokenResponse;
 import com.skax.aiportal.client.sktai.authorization.dto.response.AccessTokenWithProjectResponse;
-import com.skax.aiportal.client.sktai.authorization.dto.response.LoginResponse;
-
-import org.springframework.cloud.openfeign.FeignClient;
-import org.springframework.http.MediaType;
-import org.springframework.web.bind.annotation.*;
 
 /**
  * SKT AI 인증 API Feign Client
@@ -43,7 +45,7 @@ public interface SktAiAuthenticationClient {
      * 
      * @return SSO 로그인 응답
      */
-    @GetMapping("/api/v1/auth/login/sso")
+    @GetMapping(value="/api/v1/auth/login/sso", produces = MediaType.APPLICATION_JSON_VALUE)
     Object ssoLogin();
 
     /**
@@ -51,7 +53,7 @@ public interface SktAiAuthenticationClient {
      * 
      * @return SSO 콜백 응답
      */
-    @GetMapping("/api/v1/auth/login/sso/callback")
+    @GetMapping(value = "/api/v1/auth/login/sso/callback", produces = MediaType.APPLICATION_XML_VALUE)
     Object ssoCallback();
 
     /**
@@ -59,7 +61,7 @@ public interface SktAiAuthenticationClient {
      * 
      * @return SAML 메타데이터
      */
-    @GetMapping("/api/v1/auth/saml_idp/metadata")
+    @GetMapping(value="/api/v1/auth/saml_idp/metadata", produces = MediaType.APPLICATION_XML_VALUE)
     Object getSamlMetadata();
 
     /**
@@ -78,8 +80,8 @@ public interface SktAiAuthenticationClient {
      * @param request 시스템 로그인 요청 정보
      * @return 액세스 토큰
      */
-    @PostMapping("/api/v1/auth/login/system")
-     AccessTokenResponse systemLogin(
+    @PostMapping(value = "/api/v1/auth/login/system", consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    AccessTokenResponse systemLogin(
             @RequestParam("client_secret") String clientSecret,
             @RequestParam(value = "client_name", defaultValue = "default") String clientName,
             @RequestBody SystemLoginRequest request
@@ -91,7 +93,7 @@ public interface SktAiAuthenticationClient {
      * @param username 사용자명
      * @return 로그아웃 결과
      */
-    @PostMapping("/api/v1/auth/logout")
+    @PostMapping(value = "/api/v1/auth/logout", consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     Object logout(@RequestParam("username") String username);
 
     /**
@@ -100,7 +102,7 @@ public interface SktAiAuthenticationClient {
      * @param refreshToken 리프레시 토큰
      * @return 새로운 액세스 토큰 및 프로젝트 정보
      */
-    @PostMapping("/api/v1/auth/token/refresh")
+    @PostMapping(value= "/api/v1/auth/token/refresh", consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     AccessTokenWithProjectResponse refreshToken(@RequestParam("refresh_token") String refreshToken);
 
     /**
@@ -109,7 +111,7 @@ public interface SktAiAuthenticationClient {
      * @param toExchangeClientName 교환할 클라이언트명 (기본값: default)
      * @return 교환된 토큰 및 프로젝트 정보
      */
-    @GetMapping("/api/v1/auth/token/exchange")
+    @GetMapping(value="/api/v1/auth/token/exchange", produces = MediaType.APPLICATION_JSON_VALUE)
     AccessTokenWithProjectResponse exchangeToken(
             @RequestParam(value = "to_exchange_client_name", defaultValue = "default") String toExchangeClientName
     );
