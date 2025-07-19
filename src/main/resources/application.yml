@@ -48,6 +48,16 @@ spring:
   sql:
     init:
       mode: always
+
+# SKT AI 외부 API 설정
+sktai:
+  api:
+    base-url: https://aip-stg.sktai.io
+    client-id: default
+    client-secret: ${SKTAI_CLIENT_SECRET:}
+    timeout:
+      connect: 5000  # 연결 타임아웃 (밀리초)
+      read: 30000    # 읽기 타임아웃 (밀리초)
       data-locations: classpath:data.sql
   
   # Jackson 설정

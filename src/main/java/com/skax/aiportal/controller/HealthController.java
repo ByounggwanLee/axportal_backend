@@ -1,6 +1,6 @@
 package com.skax.aiportal.controller;
 
-import com.skax.aiportal.dto.CustApiResponse;
+import com.skax.aiportal.dto.CustomApiResponse;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
@@ -44,9 +44,9 @@ public class HealthController {
      */
     @GetMapping
     @Operation(summary = "헬스체크", description = "애플리케이션의 기본 상태를 확인합니다.")
-    public ResponseEntity<CustApiResponse<String>> health() {
+    public ResponseEntity<CustomApiResponse<String>> health() {
         log.debug("Health check requested");
-        return ResponseEntity.ok(CustApiResponse.success("UP", "애플리케이션이 정상적으로 동작 중입니다."));
+        return ResponseEntity.ok(CustomApiResponse.success("UP", "애플리케이션이 정상적으로 동작 중입니다."));
     }
 
     /**
@@ -56,7 +56,7 @@ public class HealthController {
      */
     @GetMapping("/info")
     @Operation(summary = "상세 헬스체크", description = "애플리케이션의 상세 정보를 포함한 상태를 확인합니다.")
-    public ResponseEntity<CustApiResponse<Map<String, Object>>> healthInfo() {
+    public ResponseEntity<CustomApiResponse<Map<String, Object>>> healthInfo() {
         log.debug("Detailed health check requested");
         
         Map<String, Object> info = new HashMap<>();
@@ -66,6 +66,6 @@ public class HealthController {
         info.put("timestamp", LocalDateTime.now());
         info.put("version", "1.0.0");
         
-        return ResponseEntity.ok(CustApiResponse.success(info, "애플리케이션 상세 정보"));
+        return ResponseEntity.ok(CustomApiResponse.success(info, "애플리케이션 상세 정보"));
     }
 }
