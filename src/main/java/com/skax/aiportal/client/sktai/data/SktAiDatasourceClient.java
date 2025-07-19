@@ -281,4 +281,21 @@ public interface SktAiDatasourceClient {
             @Parameter(description = "데이터소스 파일 ID", required = true)
             @PathVariable("datasource_file_id") String datasourceFileId
     );
+
+    /**
+     * 파일 업로드 (임시)
+     * 
+     * @param files 업로드할 파일 목록
+     * @return 임시 파일 정보
+     */
+    @Operation(summary = "파일 업로드", description = "서버에 파일을 임시로 업로드합니다.")
+    @ApiResponses({
+        @ApiResponse(responseCode = "201", description = "파일 업로드 성공"),
+        @ApiResponse(responseCode = "422", description = "요청 데이터 검증 오류")
+    })
+    @PostMapping(value = "/api/v1/datasources/upload/files", consumes = "multipart/form-data")
+    Object uploadFiles(
+            @Parameter(description = "업로드할 파일 목록", required = true)
+            @RequestParam("files") Object[] files
+    );
 }

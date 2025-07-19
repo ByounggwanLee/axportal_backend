@@ -153,6 +153,59 @@ public interface SktAiDatasetClient {
     Object hardDeleteAllDatasets();
 
     /**
+     * 파일 업로드를 통한 데이터셋 생성
+     * 
+     * @param file 업로드할 파일
+     * @param name 데이터셋 이름
+     * @param type 데이터셋 타입
+     * @param status 데이터셋 상태
+     * @param description 데이터셋 설명
+     * @param tags 데이터셋 태그
+     * @param projectId 프로젝트 ID
+     * @param createdBy 생성자
+     * @param updatedBy 수정자
+     * @param payload 추가 페이로드
+     * @return 생성된 데이터셋 정보
+     */
+    @Operation(summary = "파일 업로드 데이터셋 생성", description = "파일을 직접 업로드하여 데이터셋을 생성합니다.")
+    @ApiResponses({
+        @ApiResponse(responseCode = "201", description = "데이터셋 생성 성공"),
+        @ApiResponse(responseCode = "422", description = "요청 데이터 검증 오류")
+    })
+    @PostMapping(value = "/api/v1/datasets/upload/files", consumes = "multipart/form-data")
+    DatasetResponse uploadFileDataset(
+            @Parameter(description = "업로드할 파일", required = true)
+            @RequestParam("file") Object file,
+            
+            @Parameter(description = "데이터셋 이름", required = true)
+            @RequestParam("name") String name,
+            
+            @Parameter(description = "데이터셋 타입", required = true)
+            @RequestParam("type") String type,
+            
+            @Parameter(description = "데이터셋 상태")
+            @RequestParam(value = "status", defaultValue = "processing") String status,
+            
+            @Parameter(description = "데이터셋 설명")
+            @RequestParam(value = "description", required = false) String description,
+            
+            @Parameter(description = "데이터셋 태그")
+            @RequestParam(value = "tags", required = false) String tags,
+            
+            @Parameter(description = "프로젝트 ID", required = true)
+            @RequestParam("project_id") String projectId,
+            
+            @Parameter(description = "생성자")
+            @RequestParam(value = "created_by", required = false) String createdBy,
+            
+            @Parameter(description = "수정자")
+            @RequestParam(value = "updated_by", required = false) String updatedBy,
+            
+            @Parameter(description = "추가 페이로드")
+            @RequestParam(value = "payload", required = false) String payload
+    );
+
+    /**
      * 데이터셋 미리보기
      * 
      * @param datasetId 데이터셋 ID
