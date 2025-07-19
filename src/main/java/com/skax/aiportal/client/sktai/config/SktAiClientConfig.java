@@ -69,7 +69,7 @@ public class SktAiClientConfig {
             //-- LBG requestTemplate.header("Content-Type", "application/x-www-form-urlencoded");
             requestTemplate.header("User-Agent", "AXPORTAL-Backend/1.0");
             
-            log.debug("공통 헤더 설정 완료 - Accept: application/json, Content-Type: application/x-www-form-urlencoded");
+            log.debug("공통 헤더 설정 완료 - Accept: application/json); //-- LBG , Content-Type: application/x-www-form-urlencoded");
         };
     }
 
