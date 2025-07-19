@@ -1,0 +1,28 @@
+# 스테이징 환경 설정
+spring:
+  # 데이터베이스 설정 (PostgreSQL)
+  datasource:
+    url: jdbc:postgresql://localhost:5432/axportal_staging
+    driver-class-name: org.postgresql.Driver
+    username: ${DB_USERNAME:axportal}
+    password: ${DB_PASSWORD:password}
+  
+  # JPA 설정
+  jpa:
+    hibernate:
+      ddl-auto: validate
+    show-sql: false
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+  
+  # H2 콘솔 비활성화
+  h2:
+    console:
+      enabled: false
+
+# 로깅 설정
+logging:
+  level:
+    com.skax.aiportal: INFO
+    org.hibernate.SQL: WARN

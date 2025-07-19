@@ -1,0 +1,34 @@
+# 테스트 환경 설정
+spring:
+  # 데이터베이스 설정 (H2 In-Memory)
+  datasource:
+    url: jdbc:h2:mem:test;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE
+    driver-class-name: org.h2.Driver
+    username: sa
+    password: 
+  
+  # JPA 설정
+  jpa:
+    hibernate:
+      ddl-auto: create-drop
+    show-sql: false
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.H2Dialect
+  
+  # SQL 초기화 비활성화
+  sql:
+    init:
+      mode: never
+  
+  # H2 콘솔 비활성화
+  h2:
+    console:
+      enabled: false
+
+# 로깅 설정
+logging:
+  level:
+    com.skax.aiportal: DEBUG
+    org.springframework.web: WARN
+    org.hibernate.SQL: WARN

@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!--
+    샘플 MyBatis 매퍼
+    
+    복잡한 쿼리나 동적 쿼리가 필요한 경우 MyBatis를 사용합니다.
+    
+    @author ByounggwanLee
+    @since 2025-07-19
+    @version 1.0
+-->
+<mapper namespace="com.skax.aiportal.repository.sample.SampleMapper">
+    
+    <!-- 샘플 결과 매핑 -->
+    <resultMap id="sampleResultMap" type="com.skax.aiportal.entity.sample.Sample">
+        <id property="id" column="id"/>
+        <result property="title" column="title"/>
+        <result property="content" column="content"/>
+        <result property="active" column="active"/>
+        <result property="status" column="status"/>
+        <result property="viewCount" column="view_count"/>
+        <result property="createdAt" column="created_at"/>
+        <result property="updatedAt" column="updated_at"/>
+        <result property="createdBy" column="created_by"/>
+        <result property="updatedBy" column="updated_by"/>
+    </resultMap>
+    
+    <!-- 동적 검색 조건을 위한 SQL 조각 -->
+    <sql id="searchConditions">
+        <where>
+            <if test="title != null and title != ''">
+                AND title LIKE CONCAT('%', #{title}, '%')
+            </if>
+            <if test="content != null and content != ''">
+                AND content LIKE CONCAT('%', #{content}, '%')
+            </if>
+            <if test="active != null">
+                AND active = #{active}
+            </if>
+            <if test="status != null">
+                AND status = #{status}
+            </if>
+            <if test="startDate != null">
+                AND created_at >= #{startDate}
+            </if>
+            <if test="endDate != null">
+                AND created_at <![CDATA[<=]]> #{endDate}
+            </if>
+        </where>
+    </sql>
+    
+    <!-- 복잡한 검색 쿼리 예시 -->
+    <select id="findSamplesWithDynamicConditions" resultMap="sampleResultMap">
+        SELECT 
+            id, title, content, active, status, view_count,
+            created_at, updated_at, created_by, updated_by
+        FROM samples
+        <include refid="searchConditions"/>
+        ORDER BY 
+        <choose>
+            <when test="sortBy == 'viewCount'">view_count DESC</when>
+            <when test="sortBy == 'title'">title ASC</when>
+            <when test="sortBy == 'updatedAt'">updated_at DESC</when>
+            <otherwise>created_at DESC</otherwise>
+        </choose>
+        <if test="limit != null and limit > 0">
+            LIMIT #{limit}
+        </if>
+        <if test="offset != null and offset >= 0">
+            OFFSET #{offset}
+        </if>
+    </select>
+    
+    <!-- 통계 조회 쿼리 -->
+    <select id="getSampleStatistics" resultType="map">
+        SELECT 
+            COUNT(*) as total_count,
+            COUNT(CASE WHEN active = true THEN 1 END) as active_count,
+            COUNT(CASE WHEN status = 'DRAFT' THEN 1 END) as draft_count,
+            COUNT(CASE WHEN status = 'PUBLISHED' THEN 1 END) as published_count,
+            COUNT(CASE WHEN status = 'ARCHIVED' THEN 1 END) as archived_count,
+            AVG(view_count) as avg_view_count,
+            MAX(view_count) as max_view_count
+        FROM samples
+    </select>
+    
+    <!-- 월별 샘플 생성 통계 -->
+    <select id="getMonthlySampleStats" resultType="map">
+        SELECT 
+            DATE_FORMAT(created_at, '%Y-%m') as month,
+            COUNT(*) as count
+        FROM samples
+        WHERE created_at >= DATE_SUB(NOW(), INTERVAL 12 MONTH)
+        GROUP BY DATE_FORMAT(created_at, '%Y-%m')
+        ORDER BY month DESC
+    </select>
+    
+    <!-- 벌크 업데이트 예시 -->
+    <update id="bulkUpdateStatus">
+        UPDATE samples 
+        SET status = #{newStatus}, 
+            updated_at = NOW(),
+            updated_by = #{updatedBy}
+        WHERE id IN
+        <foreach collection="ids" item="id" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </update>
+    
+</mapper>
