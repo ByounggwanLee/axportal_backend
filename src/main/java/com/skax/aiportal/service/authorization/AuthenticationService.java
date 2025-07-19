@@ -85,19 +85,4 @@ public interface AuthenticationService {
      * @return 교환된 토큰 및 프로젝트 정보
      */
     AuthTokenWithProjectResponse exchangeToken(String toExchangeClientName);
-
-    /**
-     * 토큰 유효성 검증
-     * 
-     * @param accessToken 검증할 액세스 토큰
-     * @return 토큰 유효성 여부
-     */
-    boolean validateToken(String accessToken);
-
-    /**
-     * 현재 로그인한 사용자 정보 조회
-     * 
-     * @return 사용자 정보
-     */
-    Object getCurrentUser();
 }

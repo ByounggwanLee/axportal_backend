@@ -4,6 +4,8 @@ import com.skax.aiportal.client.sktai.authorization.dto.request.OAuth2LoginReque
 import com.skax.aiportal.client.sktai.authorization.dto.request.SystemLoginRequest;
 import com.skax.aiportal.client.sktai.authorization.dto.response.AccessTokenResponse;
 import com.skax.aiportal.client.sktai.authorization.dto.response.AccessTokenWithProjectResponse;
+import com.skax.aiportal.client.sktai.authorization.dto.response.LoginResponse;
+
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
@@ -20,8 +22,11 @@ import org.springframework.web.bind.annotation.*;
 @FeignClient(
     name = "skt-ai-auth",
     url = "${sktai.api.base-url:https://aip-stg.sktai.io}",
-    configuration = com.skax.aiportal.client.sktai.config.SktAiClientConfig.class
-)
+    configuration = {
+                com.skax.aiportal.client.sktai.config.SktAiClientConfig.class,
+                com.skax.aiportal.client.sktai.interceptor.SktAiAuthInterceptor.class,
+                com.skax.aiportal.client.sktai.interceptor.SktAiLoggingInterceptor.class
+})
 public interface SktAiAuthenticationClient {
 
     /**
@@ -74,7 +79,7 @@ public interface SktAiAuthenticationClient {
      * @return 액세스 토큰
      */
     @PostMapping("/api/v1/auth/login/system")
-    AccessTokenResponse systemLogin(
+     AccessTokenResponse systemLogin(
             @RequestParam("client_secret") String clientSecret,
             @RequestParam(value = "client_name", defaultValue = "default") String clientName,
             @RequestBody SystemLoginRequest request

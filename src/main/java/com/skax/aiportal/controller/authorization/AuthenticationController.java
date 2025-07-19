@@ -229,22 +229,4 @@ public class AuthenticationController {
                     .body(CustomApiResponse.failure("토큰 교환에 실패했습니다."));
         }
     }
-
-    /**
-     * 현재 사용자 정보 조회
-     */
-    @Operation(summary = "현재 사용자 정보", description = "현재 로그인한 사용자의 정보를 조회합니다.")
-    @GetMapping("/me")
-    public ResponseEntity<CustomApiResponse<?>> getCurrentUser() {
-        log.info("현재 사용자 정보 조회 요청");
-        
-        try {
-            Object response = authenticationService.getCurrentUser();
-            return ResponseEntity.ok(CustomApiResponse.success(response, "사용자 정보 조회가 완료되었습니다."));
-        } catch (Exception e) {
-            log.error("사용자 정보 조회 실패: 오류={}", e.getMessage());
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
-                    .body(CustomApiResponse.failure("사용자 정보 조회에 실패했습니다."));
-        }
-    }
 }

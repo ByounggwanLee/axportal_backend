@@ -1,11 +1,20 @@
 package com.skax.aiportal.client.sktai.config;
 
+import feign.Client;
 import feign.Logger;
 import feign.RequestInterceptor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+
+import java.security.cert.CertificateException;
+import java.security.cert.X509Certificate;
+
+import javax.net.ssl.SSLContext;
+import javax.net.ssl.SSLSocketFactory;
+import javax.net.ssl.TrustManager;
+import javax.net.ssl.X509TrustManager;
 
 /**
  * SKT AI 클라이언트 설정 클래스
@@ -57,10 +66,10 @@ public class SktAiClientConfig {
             
             // 공통 헤더 설정
             requestTemplate.header("Accept", "application/json");
-            requestTemplate.header("Content-Type", "application/json");
+            requestTemplate.header("Content-Type", "application/x-www-form-urlencoded");
             requestTemplate.header("User-Agent", "AXPORTAL-Backend/1.0");
             
-            log.debug("공통 헤더 설정 완료 - Accept: application/json, Content-Type: application/json");
+            log.debug("공통 헤더 설정 완료 - Accept: application/json, Content-Type: application/x-www-form-urlencoded");
         };
     }
 
@@ -92,5 +101,51 @@ public class SktAiClientConfig {
         private final String baseUrl;
         private final int connectTimeout;
         private final int readTimeout;
+    }
+
+    /**
+     * 개발/테스트 환경에서 모든 SSL 인증서를 신뢰하는 Feign Client (운영 환경에서는 사용 금지)
+     */
+    @Bean
+    public Client feignClient() {
+       try {
+            // 개발 환경용 - 모든 SSL 인증서를 신뢰하는 TrustManager
+            // 운영 환경에서는 이 설정을 제거하고 적절한 인증서 검증을 사용해야 합니다
+            TrustManager[] trustAllCerts = new TrustManager[] {
+                new X509TrustManager() {
+                    @Override
+                    public void checkClientTrusted(X509Certificate[] chain, String authType) 
+                            throws CertificateException {
+                        // 개발 환경용 - 클라이언트 인증서 검증 생략
+                    }
+
+                    @Override
+                    public void checkServerTrusted(X509Certificate[] chain, String authType) 
+                            throws CertificateException {
+                        // 개발 환경용 - 서버 인증서 검증 생략
+                        log.debug("SSL 인증서 검증 생략 (개발 환경)");
+                    }
+
+                    @Override
+                    public X509Certificate[] getAcceptedIssuers() {
+                        return new X509Certificate[0];
+                    }
+                }
+            };
+
+            // SSL Context 설정
+            SSLContext sslContext = SSLContext.getInstance("SSL");
+            sslContext.init(null, trustAllCerts, new java.security.SecureRandom());
+            
+            SSLSocketFactory sslSocketFactory = sslContext.getSocketFactory();
+
+            log.info("HTTPS 지원 Feign Client가 설정되었습니다.");
+            return new Client.Default(sslSocketFactory, (hostname, session) -> true);
+            
+        } catch (Exception e) {
+            log.error("HTTPS Feign Client 설정 중 오류 발생: {}", e.getMessage(), e);
+            log.warn("기본 Feign Client를 사용합니다.");
+            return new Client.Default(null, null);
+        }
     }
 }

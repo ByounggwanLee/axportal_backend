@@ -31,8 +31,7 @@ import org.springframework.stereotype.Service;
 public class SktAuthenticationServiceImpl implements AuthenticationService {
 
     private final SktAiAuthenticationClient authenticationClient;
-    private final SktAiUserManagementClient userManagementClient;
-
+    
     @Override
     public AuthTokenWithProjectResponse login(AuthLoginRequest request) {
         log.info("OAuth2 로그인 시도: 사용자={}", request.getUsername());
@@ -53,7 +52,7 @@ public class SktAuthenticationServiceImpl implements AuthenticationService {
             AuthTokenWithProjectResponse response = convertToAuthTokenWithProjectResponse(clientResponse);
             
             log.info("OAuth2 로그인 성공: 사용자={}", request.getUsername());
-            return response;
+            return response; 
             
         } catch (Exception e) {
             log.error("OAuth2 로그인 실패: 사용자={}, 오류={}", request.getUsername(), e.getMessage(), e);
@@ -199,37 +198,6 @@ public class SktAuthenticationServiceImpl implements AuthenticationService {
         } catch (Exception e) {
             log.error("토큰 교환 실패: 클라이언트={}, 오류={}", toExchangeClientName, e.getMessage(), e);
             throw new RuntimeException("토큰 교환에 실패했습니다: " + e.getMessage(), e);
-        }
-    }
-
-    @Override
-    public boolean validateToken(String accessToken) {
-        log.info("토큰 유효성 검증 요청");
-        
-        try {
-            // 현재 사용자 정보를 조회하여 토큰 유효성 간접 확인
-            getCurrentUser();
-            log.info("토큰 유효성 검증 성공");
-            return true;
-            
-        } catch (Exception e) {
-            log.warn("토큰 유효성 검증 실패: 오류={}", e.getMessage());
-            return false;
-        }
-    }
-
-    @Override
-    public Object getCurrentUser() {
-        log.info("현재 사용자 정보 조회 요청");
-        
-        try {
-            MeResponse response = userManagementClient.getMyInfo();
-            log.info("현재 사용자 정보 조회 완료: 사용자={}", response.getUsername());
-            return response;
-            
-        } catch (Exception e) {
-            log.error("현재 사용자 정보 조회 실패: 오류={}", e.getMessage(), e);
-            throw new RuntimeException("사용자 정보 조회에 실패했습니다: " + e.getMessage(), e);
         }
     }
 
