@@ -22,7 +22,7 @@ import java.time.LocalDateTime;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class ApiResponse<T> {
+public class CustApiResponse<T> {
     
     /**
      * 성공 여부
@@ -52,8 +52,8 @@ public class ApiResponse<T> {
      * @param <T> 데이터 타입
      * @return 성공 응답
      */
-    public static <T> ApiResponse<T> success(T data) {
-        return ApiResponse.<T>builder()
+    public static <T> CustApiResponse<T> success(T data) {
+        return CustApiResponse.<T>builder()
                 .success(true)
                 .message("성공")
                 .data(data)
@@ -69,8 +69,8 @@ public class ApiResponse<T> {
      * @param <T> 데이터 타입
      * @return 성공 응답
      */
-    public static <T> ApiResponse<T> success(T data, String message) {
-        return ApiResponse.<T>builder()
+    public static <T> CustApiResponse<T> success(T data, String message) {
+        return CustApiResponse.<T>builder()
                 .success(true)
                 .message(message)
                 .data(data)
@@ -84,8 +84,8 @@ public class ApiResponse<T> {
      * @param message 성공 메시지
      * @return 성공 응답
      */
-    public static ApiResponse<Void> success(String message) {
-        return ApiResponse.<Void>builder()
+    public static CustApiResponse<Void> success(String message) {
+        return CustApiResponse.<Void>builder()
                 .success(true)
                 .message(message)
                 .timestamp(LocalDateTime.now())
@@ -98,8 +98,8 @@ public class ApiResponse<T> {
      * @param message 실패 메시지
      * @return 실패 응답
      */
-    public static ApiResponse<Void> failure(String message) {
-        return ApiResponse.<Void>builder()
+    public static CustApiResponse<Void> failure(String message) {
+        return CustApiResponse.<Void>builder()
                 .success(false)
                 .message(message)
                 .timestamp(LocalDateTime.now())
