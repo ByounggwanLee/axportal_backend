@@ -5,22 +5,21 @@ import com.skax.aiportal.client.sktai.authorization.dto.CreateProjectRole;
 import com.skax.aiportal.client.sktai.authorization.dto.UpdateClient;
 import com.skax.aiportal.client.sktai.authorization.dto.response.*;
 import org.springframework.cloud.openfeign.FeignClient;
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
 /**
  * SKT AI 프로젝트 관리 API Feign Client
  * 
- * <p>SKT AI 플랫폼의 프로젝트 관리 관련 API를 호출하는 Feign Client입니다.</p>
+ * <p>
+ * SKT AI 플랫폼의 프로젝트 관리 관련 API를 호출하는 Feign Client입니다.
+ * </p>
  * 
  * @author ByounggwanLee
  * @since 2025-07-19
  * @version 1.0
  */
-@FeignClient(
-    name = "skt-ai-project",
-    url = "${sktai.api.base-url:https://aip-stg.sktai.io}",
-    configuration = com.skax.aiportal.client.sktai.config.SktAiClientConfig.class
-)
+@FeignClient(name = "skt-ai-project", url = "${sktai.api.base-url:https://aip-stg.sktai.io}", configuration = com.skax.aiportal.client.sktai.config.SktAiClientConfig.class)
 public interface SktAiProjectManagementClient {
 
     /**
@@ -29,15 +28,15 @@ public interface SktAiProjectManagementClient {
      * @param createClient 프로젝트 생성 정보
      * @return 생성된 프로젝트 정보
      */
-    @PostMapping("/api/v1/projects")
+    @PostMapping(value = "/api/v1/projects", consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     CreatedClientReadResponse registerProject(@RequestBody CreateClient createClient);
 
     /**
      * 프로젝트 목록 조회
      * 
-     * @param page 페이지 번호 (기본값: 1)
-     * @param size 페이지 크기 (기본값: 10)
-     * @param sort 정렬 기준
+     * @param page   페이지 번호 (기본값: 1)
+     * @param size   페이지 크기 (기본값: 10)
+     * @param sort   정렬 기준
      * @param filter 필터
      * @param search 검색어
      * @return 프로젝트 목록
@@ -48,21 +47,19 @@ public interface SktAiProjectManagementClient {
             @RequestParam(value = "size", defaultValue = "10") Integer size,
             @RequestParam(value = "sort", required = false) String sort,
             @RequestParam(value = "filter", required = false) String filter,
-            @RequestParam(value = "search", required = false) String search
-    );
+            @RequestParam(value = "search", required = false) String search);
 
     /**
      * 프로젝트 수정
      * 
-     * @param projectId 프로젝트 ID
+     * @param projectId    프로젝트 ID
      * @param updateClient 프로젝트 수정 정보
      * @return 수정된 프로젝트 정보
      */
     @PutMapping("/api/v1/projects/{project_id}")
     CreatedClientReadResponse editProject(
             @PathVariable("project_id") String projectId,
-            @RequestBody UpdateClient updateClient
-    );
+            @RequestBody UpdateClient updateClient);
 
     /**
      * 프로젝트 조회
@@ -85,11 +82,11 @@ public interface SktAiProjectManagementClient {
      * 클라이언트 역할 목록 조회
      * 
      * @param clientId 클라이언트 ID
-     * @param page 페이지 번호 (기본값: 1)
-     * @param size 페이지 크기 (기본값: 10)
-     * @param sort 정렬 기준
-     * @param filter 필터
-     * @param search 검색어
+     * @param page     페이지 번호 (기본값: 1)
+     * @param size     페이지 크기 (기본값: 10)
+     * @param sort     정렬 기준
+     * @param filter   필터
+     * @param search   검색어
      * @return 역할 목록
      */
     @GetMapping("/api/v1/projects/{client_id}/roles")
@@ -99,32 +96,30 @@ public interface SktAiProjectManagementClient {
             @RequestParam(value = "size", defaultValue = "10") Integer size,
             @RequestParam(value = "sort", required = false) String sort,
             @RequestParam(value = "filter", required = false) String filter,
-            @RequestParam(value = "search", required = false) String search
-    );
+            @RequestParam(value = "search", required = false) String search);
 
     /**
      * 클라이언트 역할 등록
      * 
-     * @param clientId 클라이언트 ID
+     * @param clientId          클라이언트 ID
      * @param createProjectRole 역할 생성 정보
      * @return 생성된 역할 정보
      */
-    @PostMapping("/api/v1/projects/{client_id}/roles")
+    @PostMapping(value = "/api/v1/projects/{client_id}/roles", consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     RoleResponse registerClientRole(
             @PathVariable("client_id") String clientId,
-            @RequestBody CreateProjectRole createProjectRole
-    );
+            @RequestBody CreateProjectRole createProjectRole);
 
     /**
      * 특정 역할의 사용자 목록 조회
      * 
      * @param clientId 클라이언트 ID
      * @param roleName 역할명
-     * @param page 페이지 번호 (기본값: 1)
-     * @param size 페이지 크기 (기본값: 10)
-     * @param sort 정렬 기준
-     * @param filter 필터
-     * @param search 검색어
+     * @param page     페이지 번호 (기본값: 1)
+     * @param size     페이지 크기 (기본값: 10)
+     * @param sort     정렬 기준
+     * @param filter   필터
+     * @param search   검색어
      * @return 사용자 목록
      */
     @GetMapping("/api/v1/projects/{client_id}/roles/{role_name}/users")
@@ -135,8 +130,7 @@ public interface SktAiProjectManagementClient {
             @RequestParam(value = "size", defaultValue = "10") Integer size,
             @RequestParam(value = "sort", required = false) String sort,
             @RequestParam(value = "filter", required = false) String filter,
-            @RequestParam(value = "search", required = false) String search
-    );
+            @RequestParam(value = "search", required = false) String search);
 
     /**
      * 역할 정보 조회
@@ -150,16 +144,15 @@ public interface SktAiProjectManagementClient {
     /**
      * 클라이언트 역할 수정
      * 
-     * @param clientId 클라이언트 ID
-     * @param roleName 역할명
+     * @param clientId    클라이언트 ID
+     * @param roleName    역할명
      * @param description 설명
      */
     @PutMapping("/api/v1/projects/{client_id}/roles/{role_name}")
     void updateClientRole(
             @PathVariable("client_id") String clientId,
             @PathVariable("role_name") String roleName,
-            @RequestParam("description") String description
-    );
+            @RequestParam("description") String description);
 
     /**
      * 클라이언트 역할 삭제
@@ -170,6 +163,5 @@ public interface SktAiProjectManagementClient {
     @DeleteMapping("/api/v1/projects/{client_id}/roles/{role_name}")
     void deleteClientRole(
             @PathVariable("client_id") String clientId,
-            @PathVariable("role_name") String roleName
-    );
+            @PathVariable("role_name") String roleName);
 }

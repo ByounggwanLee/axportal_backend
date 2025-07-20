@@ -4,6 +4,7 @@ import com.skax.aiportal.client.sktai.authorization.dto.response.GroupResponse;
 import com.skax.aiportal.client.sktai.authorization.dto.response.GroupsReadResponse;
 import com.skax.aiportal.client.sktai.authorization.dto.response.UsersReadResponse;
 import org.springframework.cloud.openfeign.FeignClient;
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
 /**
@@ -32,7 +33,7 @@ public interface SktAiGroupManagementClient {
      * @param search 검색어
      * @return 그룹 목록
      */
-    @GetMapping("/api/v1/groups")
+    @GetMapping(value="/api/v1/groups")
     GroupsReadResponse getGroups(
             @RequestParam(value = "page", defaultValue = "1") Integer page,
             @RequestParam(value = "size", defaultValue = "10") Integer size,
@@ -47,7 +48,7 @@ public interface SktAiGroupManagementClient {
      * @param groupName 그룹명
      * @return 생성된 그룹 정보
      */
-    @PostMapping("/api/v1/groups")
+    @PostMapping(value="/api/v1/groups", consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE, produces = "application/json")
     GroupResponse registerGroup(@RequestParam("group_name") String groupName);
 
     /**
@@ -56,7 +57,7 @@ public interface SktAiGroupManagementClient {
      * @param groupId 그룹 ID
      * @return 그룹 정보
      */
-    @GetMapping("/api/v1/groups/{group_id}")
+    @GetMapping(value ="/api/v1/groups/{group_id}")
     GroupResponse getGroup(@PathVariable("group_id") String groupId);
 
     /**
@@ -65,7 +66,7 @@ public interface SktAiGroupManagementClient {
      * @param groupId 그룹 ID
      * @param groupName 새 그룹명
      */
-    @PutMapping("/api/v1/groups/{group_id}")
+    @PutMapping(value ="/api/v1/groups/{group_id}")
     void updateGroup(
             @PathVariable("group_id") String groupId,
             @RequestParam("group_name") String groupName
@@ -76,7 +77,7 @@ public interface SktAiGroupManagementClient {
      * 
      * @param groupId 그룹 ID
      */
-    @DeleteMapping("/api/v1/groups/{group_id}")
+    @DeleteMapping(value ="/api/v1/groups/{group_id}")
     void deleteGroup(@PathVariable("group_id") String groupId);
 
     /**
@@ -90,7 +91,7 @@ public interface SktAiGroupManagementClient {
      * @param search 검색어
      * @return 할당 가능한 사용자 목록
      */
-    @GetMapping("/api/v1/groups/{group_id}/user-available")
+    @GetMapping(value ="/api/v1/groups/{group_id}/user-available")
     UsersReadResponse getGroupAvailableUsers(
             @PathVariable("group_id") String groupId,
             @RequestParam(value = "page", defaultValue = "1") Integer page,
@@ -111,7 +112,7 @@ public interface SktAiGroupManagementClient {
      * @param search 검색어
      * @return 그룹의 사용자 목록
      */
-    @GetMapping("/api/v1/groups/{group_id}/user-mappings")
+    @GetMapping(value ="/api/v1/groups/{group_id}/user-mappings")
     UsersReadResponse getGroupUserMappings(
             @PathVariable("group_id") String groupId,
             @RequestParam(value = "page", defaultValue = "1") Integer page,
@@ -127,7 +128,7 @@ public interface SktAiGroupManagementClient {
      * @param groupId 그룹 ID
      * @param userId 사용자 ID
      */
-    @PutMapping("/api/v1/groups/{group_id}/user-mappings")
+    @PutMapping(value ="/api/v1/groups/{group_id}/user-mappings")
     void assignUserToGroup(
             @PathVariable("group_id") String groupId,
             @RequestParam("user_id") String userId
@@ -139,7 +140,7 @@ public interface SktAiGroupManagementClient {
      * @param groupId 그룹 ID
      * @param userId 사용자 ID
      */
-    @DeleteMapping("/api/v1/groups/{group_id}/user-mappings")
+    @DeleteMapping(value = "/api/v1/groups/{group_id}/user-mappings")
     void removeUserFromGroup(
             @PathVariable("group_id") String groupId,
             @RequestParam("user_id") String userId

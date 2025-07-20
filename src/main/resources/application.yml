@@ -103,14 +103,49 @@ management:
     health:
       show-details: always
 
-# OpenAPI 문서 설정
+#-------------------------------------------------------------
+# springdoc 정의
+# http://localhost:8080/api/swagger-ui.html
+# http://localhost:8080/api/api-docs
+# http://localhost:8080/api/api-docs.yaml
+#-------------------------------------------------------------      
 springdoc:
   api-docs:
-    path: /v3/api-docs
-  swagger-ui:
-    path: /swagger-ui.html
+    path: ${SPRINGDOC_API_DOCS_PATH:/api-docs} # spring boot 웹 애플리케이션의 api를 OpenAPI 3을 이용하여 json 형식화 한것의 경로
+  default-consumes-media-type: application/json # request media type 의 기본 값
+  default-produces-media-type: application/json # response media type 의 기본 값
+  swagger-ui: # 기본값 : 컨트롤러 내에서 정의한 api 메서드 순
+    path: ${SPRINGDOC_SWAGGER_UI_PATH:/swagger-ui.html}
     display-request-duration: true
+    enabled: ${SPRINGDOC_SWAGGER_UI_ENABLED:true}
     groups-order: DESC
-    operationsSorter: method
+    operations-sorter: method # 태그 내 각 api의 정렬 기준
+                              # alpha(알파벳 오름차순), method(http method 순) 
+    tags-sorter: alpha 
+    # path: swagger-ui.html
     disable-swagger-default-url: true
+      # json화 된 config파일 대신 파라미터를 이용하여 swagger-ui에 접근하도록 합니다.
+      # api-docs(/api-docs) 및 swagger-ui.configUrl(/api-docs/swagger-config)를 두번씩 호출하는 것을 방지합니다.
+    doc-expansion: none # 기본 값: list
+      # tag와 operation을 펼치는 방식에 대한 설정
+      # String=["list", "full", "none"]
+      # none으로 설정할 경우, tag 및 operation이 모두 닫힌채로 문서가 열립니다.
     use-root-path: true
+  show-actuator: true
+  #paths-to-match: # OpenAPI 3 로 문서화할 api path 리스트
+  #  - /**
+# Swagger/OpenAPI Configuration
+
+api:  # Swagger UI Information
+  info:
+    title: AX Portal Service API
+    description: API to fetch Customer's data details for SKAX AX Portal Team
+    version: 1.0.0
+    terms-of-service: http://skax.axportal.com/terms/
+    contact:
+      name: AX Portal Service API Team
+      email: axportalteam@skax.com
+      url: http://skax.axportal.com/axportalteam
+    license:
+      name: Apache 2.0
+      url: http://www.apache.org/licenses/LICENSE-2.0.html

@@ -395,8 +395,8 @@ dto: repository/sample/request, repository/sample/resonse
 - 주석은 한글로 작성하되 기술적 용어는 영어 병기
 
 ### 2. 개발 환경 설정
-- 로컬: H2 인메모리 데이터베이스 사용
-- 개발: TestContainers 활용한 실제 DB 테스트
+- 개발: H2 인메모리 데이터베이스 사용
+- 스테이징: TestContainers 활용한 실제 DB 테스트
 - 운영: MySQL 8.0 사용
 - 개발적용시 Docker Compose 활용
 

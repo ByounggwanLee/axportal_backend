@@ -8,6 +8,7 @@ import com.skax.aiportal.client.sktai.authorization.dto.response.UserResponse;
 import com.skax.aiportal.client.sktai.authorization.dto.response.UsersReadResponse;
 import com.skax.aiportal.client.sktai.authorization.dto.response.UserRoleMappingsResponse;
 import org.springframework.cloud.openfeign.FeignClient;
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -61,7 +62,7 @@ public interface SktAiUserManagementClient {
      * @param userRegisterRequest 사용자 등록 요청
      * @return 등록된 사용자 정보
      */
-    @PostMapping("/api/v1/users/register")
+    @PostMapping(value="/api/v1/users/register", consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     UserResponse registerUser(@RequestBody UserRegisterRequest userRegisterRequest);
 
     /**
