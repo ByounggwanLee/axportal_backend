@@ -1,14 +1,23 @@
 package com.skax.aiportal.client.sktai.finetuning;
 
-import com.skax.aiportal.client.sktai.config.SktAiClientConfig;
-import com.skax.aiportal.client.sktai.finetuning.dto.request.TrainingTaskCallbackRequest;
-import com.skax.aiportal.client.sktai.finetuning.dto.response.TrainingStatusResponse;
-import org.springframework.cloud.openfeign.FeignClient;
-import org.springframework.web.bind.annotation.*;
-
 import java.util.List;
 
-@FeignClient(name = "sktAiTrainingStatusClient", url = "${sktai.base-url}", configuration = SktAiClientConfig.class)
+import org.springframework.cloud.openfeign.FeignClient;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
+
+import com.skax.aiportal.client.sktai.finetuning.dto.request.TrainingTaskCallbackRequest;
+import com.skax.aiportal.client.sktai.finetuning.dto.response.TrainingStatusResponse;
+
+@FeignClient(name = "sktAiTrainingStatusClient", url = "${sktai.api.base-url:https://aip-stg.sktai.io}", configuration = {
+        com.skax.aiportal.client.sktai.config.SktAiClientConfig.class,
+        com.skax.aiportal.client.sktai.interceptor.SktAiAuthInterceptor.class,
+        com.skax.aiportal.client.sktai.interceptor.SktAiLoggingInterceptor.class
+})
 public interface SktAiTrainingStatusClient {
 
     @GetMapping("/api/v1/finetuning/trainings/{training_id}/status")

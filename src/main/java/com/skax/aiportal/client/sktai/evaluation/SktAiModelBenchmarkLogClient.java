@@ -14,10 +14,11 @@ import java.util.List;
  * 모델 벤치마크 로그 조회 및 상태 업데이트
  */
 @FeignClient(
-    name = "skt-ai-model-benchmark-log",
-    url = "${sktai.api.base-url}",
-    configuration = SktAiClientConfig.class
-)
+    name = "skt-ai-model-benchmark-log", url = "${sktai.api.base-url:https://aip-stg.sktai.io}", configuration = {
+        com.skax.aiportal.client.sktai.config.SktAiClientConfig.class,
+        com.skax.aiportal.client.sktai.interceptor.SktAiAuthInterceptor.class,
+        com.skax.aiportal.client.sktai.interceptor.SktAiLoggingInterceptor.class
+})
 public interface SktAiModelBenchmarkLogClient {
     
     /**

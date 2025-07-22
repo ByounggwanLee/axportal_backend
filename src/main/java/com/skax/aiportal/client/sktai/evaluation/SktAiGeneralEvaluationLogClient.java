@@ -10,7 +10,11 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@FeignClient(name = "sktAiGeneralEvaluationLogClient", url = "${sktai.base-url}", configuration = SktAiClientConfig.class)
+@FeignClient(name = "sktAiGeneralEvaluationLogClient", url = "${sktai.api.base-url:https://aip-stg.sktai.io}", configuration = {
+        com.skax.aiportal.client.sktai.config.SktAiClientConfig.class,
+        com.skax.aiportal.client.sktai.interceptor.SktAiAuthInterceptor.class,
+        com.skax.aiportal.client.sktai.interceptor.SktAiLoggingInterceptor.class
+})
 public interface SktAiGeneralEvaluationLogClient {
 
     @GetMapping("/api/v1/evaluation-logs")

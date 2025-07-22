@@ -12,10 +12,11 @@ import org.springframework.web.bind.annotation.RequestBody;
  * 모델 벤치마크 태스크 생성 및 실행
  */
 @FeignClient(
-    name = "skt-ai-model-benchmark-task",
-    url = "${sktai.api.base-url}",
-    configuration = SktAiClientConfig.class
-)
+    name = "skt-ai-model-benchmark-task", url = "${sktai.api.base-url:https://aip-stg.sktai.io}", configuration = {
+        com.skax.aiportal.client.sktai.config.SktAiClientConfig.class,
+        com.skax.aiportal.client.sktai.interceptor.SktAiAuthInterceptor.class,
+        com.skax.aiportal.client.sktai.interceptor.SktAiLoggingInterceptor.class
+})
 public interface SktAiModelBenchmarkTaskClient {
     
     /**

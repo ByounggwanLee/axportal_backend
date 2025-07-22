@@ -7,7 +7,11 @@ import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
-@FeignClient(name = "sktAiRagEvaluationTaskClient", url = "${sktai.base-url}", configuration = SktAiClientConfig.class)
+@FeignClient(name = "sktAiRagEvaluationTaskClient", url = "${sktai.api.base-url:https://aip-stg.sktai.io}", configuration = {
+        com.skax.aiportal.client.sktai.config.SktAiClientConfig.class,
+        com.skax.aiportal.client.sktai.interceptor.SktAiAuthInterceptor.class,
+        com.skax.aiportal.client.sktai.interceptor.SktAiLoggingInterceptor.class
+})
 public interface SktAiRagEvaluationTaskClient {
 
     @PostMapping("/api/v1/rag-evaluation-tasks")

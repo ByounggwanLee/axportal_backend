@@ -14,10 +14,11 @@ import java.util.List;
  * 모델 벤치마크 결과 생성, 조회, 수정, 삭제
  */
 @FeignClient(
-    name = "skt-ai-model-benchmark-result",
-    url = "${sktai.api.base-url}",
-    configuration = SktAiClientConfig.class
-)
+    name = "skt-ai-model-benchmark-result", url = "${sktai.api.base-url:https://aip-stg.sktai.io}", configuration = {
+        com.skax.aiportal.client.sktai.config.SktAiClientConfig.class,
+        com.skax.aiportal.client.sktai.interceptor.SktAiAuthInterceptor.class,
+        com.skax.aiportal.client.sktai.interceptor.SktAiLoggingInterceptor.class
+})
 public interface SktAiModelBenchmarkResultClient {
     
     /**
