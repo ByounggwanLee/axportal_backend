@@ -1,0 +1,43 @@
+package com.skax.aiportal.client.sktai.safetyfilter.dto.response;
+
+import com.fasterxml.jackson.annotation.JsonProperty;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+
+/**
+ * 안전성 검사 결과 응답 DTO
+ * 
+ * 발화의 안전성 검사 결과를 반환합니다.
+ */
+@Getter
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
+public class SafetyCheckResponse {
+
+    /**
+     * 안전 여부
+     */
+    @JsonProperty("is_safe")
+    private Boolean isSafe;
+
+    /**
+     * 리다이렉션 메시지
+     */
+    @JsonProperty("redirection_message")
+    private String redirectionMessage;
+
+    /**
+     * 실행 시간
+     */
+    @JsonProperty("execution_time")
+    private Double executionTime;
+
+    /**
+     * 금지어 목록
+     */
+    @JsonProperty("stopword")
+    private Object[] stopword;
+}
