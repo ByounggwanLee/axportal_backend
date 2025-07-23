@@ -1,5 +1,7 @@
 package com.skax.aiportal.dto.data.response;
 
+import static com.skax.aiportal.constant.DatasetConstants.*;
+
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -60,7 +62,7 @@ public class DatasetHardDeleteRes {
         return DatasetHardDeleteRes.builder()
                 .data(data)
                 .processingTimeMs(processingTimeMs)
-                .statusMessage("삭제된 모든 데이터셋이 완전히 제거되었습니다.")
+                .statusMessage(DATASET_HARD_DELETE_SUCCESS_MESSAGE)
                 .build();
     }
 
@@ -76,7 +78,7 @@ public class DatasetHardDeleteRes {
         return DatasetHardDeleteRes.builder()
                 .data(data)
                 .processingTimeMs(processingTimeMs)
-                .statusMessage("삭제된 모든 데이터셋이 완전히 제거되었습니다.")
+                .statusMessage(DATASET_HARD_DELETE_SUCCESS_MESSAGE)
                 .deletedCount(deletedCount)
                 .build();
     }

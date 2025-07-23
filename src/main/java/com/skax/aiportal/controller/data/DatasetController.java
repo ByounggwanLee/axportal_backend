@@ -262,7 +262,7 @@ public class DatasetController {
                 datasetId, response.getProcessingTimeMs());
         
         return ResponseEntity.ok(
-            CustomApiResponse.success(response, "데이터셋 조회가 완료되었습니다.")
+            CustomApiResponse.success(response, DATASET_GET_SUCCESS_MESSAGE)
         );
     }
 
@@ -337,7 +337,7 @@ public class DatasetController {
                 datasetId, response.getProcessingTimeMs());
         
         return ResponseEntity.ok(
-            CustomApiResponse.success(response, "데이터셋 정보가 성공적으로 수정되었습니다.")
+            CustomApiResponse.success(response, DATASET_UPDATE_SUCCESS_MESSAGE)
         );
     }
 
@@ -397,7 +397,7 @@ public class DatasetController {
                 datasetId, response.getProcessingTimeMs());
         
         return ResponseEntity.ok(
-            CustomApiResponse.success(response, "데이터셋이 성공적으로 삭제되었습니다.")
+            CustomApiResponse.success(response, DATASET_DELETE_SUCCESS_MESSAGE)
         );
     }
 
@@ -441,7 +441,7 @@ public class DatasetController {
         log.info("데이터셋 하드 삭제 완료: 처리시간={}ms", response.getProcessingTimeMs());
         
         return ResponseEntity.ok(
-            CustomApiResponse.success(response, "삭제된 모든 데이터셋이 완전히 제거되었습니다.")
+            CustomApiResponse.success(response, DATASET_HARD_DELETE_SUCCESS_MESSAGE)
         );
     }
 
@@ -506,7 +506,7 @@ public class DatasetController {
                 response.getDatasetId(), response.getProcessingTimeMs());
         
         return ResponseEntity.status(HttpStatus.CREATED)
-                .body(CustomApiResponse.success(response, "파일 업로드를 통한 데이터셋이 성공적으로 생성되었습니다."));
+                .body(CustomApiResponse.success(response, DATASET_UPLOAD_SUCCESS_MESSAGE));
     }
 
     /**
@@ -577,7 +577,7 @@ public class DatasetController {
         log.info("데이터셋 미리보기 완료: datasetId={}", datasetId);
         
         return ResponseEntity.ok(
-            CustomApiResponse.success(response, "데이터셋 미리보기 조회가 완료되었습니다.")
+            CustomApiResponse.success(response, DATASET_PREVIEW_SUCCESS_MESSAGE)
         );
     }
 
@@ -652,7 +652,7 @@ public class DatasetController {
                 datasetId, response.getProcessingTimeMs());
         
         return ResponseEntity.ok(
-            CustomApiResponse.success(response, "데이터셋 태그가 성공적으로 업데이트되었습니다.")
+            CustomApiResponse.success(response, DATASET_TAG_UPDATE_SUCCESS_MESSAGE)
         );
     }
 
@@ -727,7 +727,7 @@ public class DatasetController {
                 datasetId, response.getProcessingTimeMs());
         
         return ResponseEntity.ok(
-            CustomApiResponse.success(response, "데이터셋 태그가 성공적으로 삭제되었습니다.")
+            CustomApiResponse.success(response, DATASET_TAG_DELETE_SUCCESS_MESSAGE)
         );
     }
 }

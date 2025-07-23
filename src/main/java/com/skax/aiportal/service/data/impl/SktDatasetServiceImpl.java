@@ -178,7 +178,7 @@ public class SktDatasetServiceImpl implements DatasetService {
     @Override
     @Transactional
     public DatasetUpdateRes updateDataset(DatasetUpdateReq request) {
-        log.info("데이터셋 수정 시작: datasetId={}", request.getDatasetId());
+        log.info(LOG_DATASET_UPDATE_START, request.getDatasetId());
         
         long startTime = System.currentTimeMillis();
         
@@ -194,15 +194,15 @@ public class SktDatasetServiceImpl implements DatasetService {
             
             long processingTime = System.currentTimeMillis() - startTime;
             
-            log.info("데이터셋 수정 완료: datasetId={}, 처리시간={}ms", request.getDatasetId(), processingTime);
+            log.info(LOG_DATASET_UPDATE_SUCCESS, request.getDatasetId(), processingTime);
             
             return DatasetUpdateRes.success(response, processingTime, request.getDatasetId());
             
         } catch (Exception e) {
             long processingTime = System.currentTimeMillis() - startTime;
-            log.error("데이터셋 수정 실패: datasetId={}, 처리시간={}ms, error={}", 
+            log.error(LOG_DATASET_UPDATE_FAILURE, 
                     request.getDatasetId(), processingTime, e.getMessage(), e);
-            throw new RuntimeException("데이터셋 수정에 실패했습니다: " + e.getMessage(), e);
+            throw new RuntimeException(String.format(DATASET_UPDATE_ERROR_MESSAGE, e.getMessage()), e);
         }
     }
 
@@ -214,7 +214,7 @@ public class SktDatasetServiceImpl implements DatasetService {
     @Override
     @Transactional
     public DatasetDeleteRes deleteDataset(DatasetDeleteReq request) {
-        log.info("데이터셋 삭제 시작: datasetId={}", request.getDatasetId());
+        log.info(LOG_DATASET_DELETE_START, request.getDatasetId());
         
         long startTime = System.currentTimeMillis();
         
@@ -224,15 +224,15 @@ public class SktDatasetServiceImpl implements DatasetService {
             
             long processingTime = System.currentTimeMillis() - startTime;
             
-            log.info("데이터셋 삭제 완료: datasetId={}, 처리시간={}ms", request.getDatasetId(), processingTime);
+            log.info(LOG_DATASET_DELETE_SUCCESS, request.getDatasetId(), processingTime);
             
             return DatasetDeleteRes.success(request.getDatasetId(), processingTime);
             
         } catch (Exception e) {
             long processingTime = System.currentTimeMillis() - startTime;
-            log.error("데이터셋 삭제 실패: datasetId={}, 처리시간={}ms, error={}", 
+            log.error(LOG_DATASET_DELETE_FAILURE, 
                     request.getDatasetId(), processingTime, e.getMessage(), e);
-            throw new RuntimeException("데이터셋 삭제에 실패했습니다: " + e.getMessage(), e);
+            throw new RuntimeException(String.format(DATASET_DELETE_ERROR_MESSAGE, e.getMessage()), e);
         }
     }
 
@@ -244,7 +244,7 @@ public class SktDatasetServiceImpl implements DatasetService {
     @Override
     @Transactional
     public DatasetHardDeleteRes hardDeleteAllDatasets() {
-        log.info("데이터셋 하드 삭제 시작");
+        log.info(LOG_DATASET_HARD_DELETE_START);
         
         long startTime = System.currentTimeMillis();
         
@@ -254,14 +254,14 @@ public class SktDatasetServiceImpl implements DatasetService {
             
             long processingTime = System.currentTimeMillis() - startTime;
             
-            log.info("데이터셋 하드 삭제 완료: 처리시간={}ms", processingTime);
+            log.info(LOG_DATASET_HARD_DELETE_SUCCESS, processingTime);
             
             return DatasetHardDeleteRes.success(response, processingTime);
             
         } catch (Exception e) {
             long processingTime = System.currentTimeMillis() - startTime;
-            log.error("데이터셋 하드 삭제 실패: 처리시간={}ms, error={}", processingTime, e.getMessage(), e);
-            throw new RuntimeException("데이터셋 하드 삭제에 실패했습니다: " + e.getMessage(), e);
+            log.error(LOG_DATASET_HARD_DELETE_FAILURE, processingTime, e.getMessage(), e);
+            throw new RuntimeException(String.format(DATASET_HARD_DELETE_ERROR_MESSAGE, e.getMessage()), e);
         }
     }
 
@@ -298,13 +298,13 @@ public class SktDatasetServiceImpl implements DatasetService {
             log.info("파일 업로드 데이터셋 생성 완료: datasetId={}, 처리시간={}ms", 
                     response.getId(), processingTime);
             
-            return DatasetCreateRes.success(response, processingTime, "파일 업로드를 통한 데이터셋이 생성되었습니다.");
+            return DatasetCreateRes.success(response, processingTime, DATASET_UPLOAD_SUCCESS_MESSAGE);
             
         } catch (Exception e) {
             long processingTime = System.currentTimeMillis() - startTime;
             log.error("파일 업로드 데이터셋 생성 실패: name={}, 처리시간={}ms, error={}", 
                     request.getName(), processingTime, e.getMessage(), e);
-            throw new RuntimeException("파일 업로드 데이터셋 생성에 실패했습니다: " + e.getMessage(), e);
+            throw new RuntimeException(String.format(DATASET_UPLOAD_ERROR_MESSAGE, e.getMessage()), e);
         }
     }
 
@@ -338,7 +338,7 @@ public class SktDatasetServiceImpl implements DatasetService {
             long processingTime = System.currentTimeMillis() - startTime;
             log.error("데이터셋 미리보기 조회 실패: datasetId={}, 처리시간={}ms, error={}", 
                     request.getDatasetId(), processingTime, e.getMessage(), e);
-            throw new RuntimeException("데이터셋 미리보기 조회에 실패했습니다: " + e.getMessage(), e);
+            throw new RuntimeException(String.format(DATASET_PREVIEW_ERROR_MESSAGE, e.getMessage()), e);
         }
     }
 
@@ -367,13 +367,13 @@ public class SktDatasetServiceImpl implements DatasetService {
             log.info("데이터셋 태그 업데이트 완료: datasetId={}, 처리시간={}ms", 
                     request.getDatasetId(), processingTime);
             
-            return DatasetGetRes.success(response, processingTime, "데이터셋 태그가 업데이트되었습니다.");
+            return DatasetGetRes.success(response, processingTime, DATASET_TAG_UPDATE_SUCCESS_MESSAGE);
             
         } catch (Exception e) {
             long processingTime = System.currentTimeMillis() - startTime;
             log.error("데이터셋 태그 업데이트 실패: datasetId={}, 처리시간={}ms, error={}", 
                     request.getDatasetId(), processingTime, e.getMessage(), e);
-            throw new RuntimeException("데이터셋 태그 업데이트에 실패했습니다: " + e.getMessage(), e);
+            throw new RuntimeException(String.format(DATASET_TAG_UPDATE_ERROR_MESSAGE, e.getMessage()), e);
         }
     }
 
@@ -402,13 +402,13 @@ public class SktDatasetServiceImpl implements DatasetService {
             log.info("데이터셋 태그 삭제 완료: datasetId={}, 처리시간={}ms", 
                     request.getDatasetId(), processingTime);
             
-            return DatasetGetRes.success(response, processingTime, "데이터셋 태그가 삭제되었습니다.");
+            return DatasetGetRes.success(response, processingTime, DATASET_TAG_DELETE_SUCCESS_MESSAGE);
             
         } catch (Exception e) {
             long processingTime = System.currentTimeMillis() - startTime;
             log.error("데이터셋 태그 삭제 실패: datasetId={}, 처리시간={}ms, error={}", 
                     request.getDatasetId(), processingTime, e.getMessage(), e);
-            throw new RuntimeException("데이터셋 태그 삭제에 실패했습니다: " + e.getMessage(), e);
+            throw new RuntimeException(String.format(DATASET_TAG_DELETE_ERROR_MESSAGE, e.getMessage()), e);
         }
     }
 }
