@@ -6,38 +6,69 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.skax.aiportal.client.sktai.data.dto.DatasetTag;
 import com.skax.aiportal.client.sktai.data.dto.ProcessorParam;
 
+import io.swagger.v3.oas.annotations.media.Schema;
+import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 /**
  * 데이터셋 생성 요청 DTO
  * 
- * <p>SKT AI 플랫폼에서 새로운 데이터셋을 생성할 때 사용하는 요청 데이터입니다.</p>
+ * <p>SKT AI Data 플랫폼에서 새로운 데이터셋을 생성하기 위한 요청 정보를 담는 객체입니다.
+ * 파인튜닝, 벤치마크, RAG 평가 등 다양한 용도의 데이터셋을 생성할 수 있습니다.</p>
  * 
  * @author ByounggwanLee
  * @since 2025-07-19
  * @version 1.0
  */
+@Schema(
+    title = "데이터셋 생성 요청",
+    description = "SKT AI Data 플랫폼에서 새로운 데이터셋을 생성하기 위한 요청 정보"
+)
 @Getter
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
+@ToString
 public class DatasetCreateRequest {
 
     /**
      * 데이터셋 이름
+     * 
+     * <p>생성할 데이터셋의 이름입니다.</p>
      */
-    @NotBlank(message = "데이터셋 이름은 필수입니다")
+    @Schema(
+        description = "데이터셋 이름",
+        example = "고객 상담 파인튜닝 데이터셋",
+        requiredMode = Schema.RequiredMode.REQUIRED,
+        maxLength = 100
+    )
+    @NotBlank(message = "데이터셋 이름은 필수입니다.")
+    @Size(max = 100, message = "데이터셋 이름은 100자를 초과할 수 없습니다.")
     private String name;
 
     /**
      * 데이터셋 타입
-     * unsupervised_finetuning, supervised_finetuning, model_benchmark, rag_evaluation
+     * 
+     * <p>데이터셋의 용도를 나타냅니다. 파인튜닝, 벤치마크, RAG 평가 등으로 구분됩니다.</p>
      */
+    @Schema(
+        description = "데이터셋 타입",
+        example = "supervised_finetuning",
+        defaultValue = "unsupervised_finetuning",
+        allowableValues = {
+            "unsupervised_finetuning", 
+            "supervised_finetuning", 
+            "model_benchmark", 
+            "rag_evaluation"
+        }
+    )
     @JsonProperty("type")
     @Builder.Default
     private String type = "unsupervised_finetuning";

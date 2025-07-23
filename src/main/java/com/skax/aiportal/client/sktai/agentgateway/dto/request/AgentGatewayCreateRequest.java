@@ -1,50 +1,154 @@
 package com.skax.aiportal.client.sktai.agentgateway.dto.request;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Size;
+
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 import java.util.List;
 import java.util.Map;
 
+/**
+ * Agent Gateway 생성 요청 DTO
+ * 
+ * <p>SKT AI Agent Gateway를 생성하기 위한 요청 정보를 담는 객체입니다.
+ * 게이트웨이 설정, 라우팅 규칙, 로드밸런싱, 보안 설정 등을 포함합니다.</p>
+ *
+ * @author ByounggwanLee
+ * @since 2025-07-23
+ * @version 1.0
+ */
+@Schema(
+    title = "Agent Gateway 생성 요청",
+    description = "SKT AI Agent Gateway 생성을 위한 요청 정보"
+)
 @Getter
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
+@ToString
 public class AgentGatewayCreateRequest {
 
+    /**
+     * 게이트웨이 이름
+     */
+    @Schema(
+        description = "게이트웨이 이름",
+        example = "고객서비스 게이트웨이",
+        requiredMode = Schema.RequiredMode.REQUIRED,
+        maxLength = 100
+    )
+    @NotBlank(message = "게이트웨이 이름은 필수입니다.")
+    @Size(max = 100, message = "게이트웨이 이름은 100자를 초과할 수 없습니다.")
     @JsonProperty("name")
     private String name;
 
+    /**
+     * 게이트웨이 설명
+     */
+    @Schema(
+        description = "게이트웨이 설명",
+        example = "고객 상담을 위한 AI Agent 게이트웨이",
+        maxLength = 500
+    )
+    @Size(max = 500, message = "게이트웨이 설명은 500자를 초과할 수 없습니다.")
     @JsonProperty("description")
     private String description;
 
+    /**
+     * 게이트웨이 타입
+     */
+    @Schema(
+        description = "게이트웨이 타입",
+        example = "http",
+        allowableValues = {"http", "websocket", "grpc"}
+    )
     @JsonProperty("gateway_type")
     private String gatewayType;
 
+    /**
+     * 게이트웨이 설정
+     */
+    @Schema(
+        description = "게이트웨이 기본 설정",
+        implementation = GatewayConfig.class
+    )
     @JsonProperty("config")
     private GatewayConfig config;
 
+    /**
+     * 라우팅 규칙 목록
+     */
+    @Schema(
+        description = "요청을 라우팅하기 위한 규칙 목록",
+        implementation = RoutingRule.class
+    )
     @JsonProperty("routing_rules")
     private List<RoutingRule> routingRules;
 
+    /**
+     * 로드밸런싱 설정
+     */
+    @Schema(
+        description = "로드밸런싱 설정",
+        implementation = LoadBalancing.class
+    )
     @JsonProperty("load_balancing")
     private LoadBalancing loadBalancing;
 
+    /**
+     * 속도 제한 설정
+     */
+    @Schema(
+        description = "요청 속도 제한 설정",
+        implementation = RateLimiting.class
+    )
     @JsonProperty("rate_limiting")
     private RateLimiting rateLimiting;
 
+    /**
+     * 보안 설정
+     */
+    @Schema(
+        description = "게이트웨이 보안 설정",
+        implementation = SecurityConfig.class
+    )
     @JsonProperty("security_config")
     private SecurityConfig securityConfig;
 
+    /**
+     * Agent 설정
+     */
+    @Schema(
+        description = "연결될 Agent 설정",
+        implementation = AgentConfig.class
+    )
     @JsonProperty("agent_config")
     private AgentConfig agentConfig;
 
+    /**
+     * 워크플로우 설정
+     */
+    @Schema(
+        description = "워크플로우 설정",
+        implementation = WorkflowConfig.class
+    )
     @JsonProperty("workflow_config")
     private WorkflowConfig workflowConfig;
 
+    /**
+     * 모니터링 설정
+     */
+    @Schema(
+        description = "모니터링 및 로깅 설정",
+        implementation = MonitoringConfig.class
+    )
     @JsonProperty("monitoring_config")
     private MonitoringConfig monitoringConfig;
 

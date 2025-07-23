@@ -3,52 +3,101 @@ package com.skax.aiportal.client.sktai.agent.dto.request;
 import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Size;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 /**
  * Agent Graph 생성 요청 DTO
+ * 
+ * <p>SKT AI Agent 플랫폼에서 새로운 그래프를 생성하기 위한 요청 정보를 담는 객체입니다.
+ * 그래프의 노드, 엣지, 변수, 메타데이터 등을 포함합니다.</p>
  *
  * @author ByounggwanLee
  * @since 2025-07-22
  * @version 1.0
  */
+@Schema(
+    title = "Agent Graph 생성 요청",
+    description = "SKT AI Agent 플랫폼에서 새로운 그래프를 생성하기 위한 요청 정보"
+)
 @Getter
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
+@ToString
 public class GraphCreateRequest {
 
     /**
      * 그래프 이름
+     * 
+     * <p>생성할 그래프의 이름입니다.</p>
      */
+    @Schema(
+        description = "그래프 이름",
+        example = "고객 상담 봇 그래프",
+        requiredMode = Schema.RequiredMode.REQUIRED,
+        maxLength = 100
+    )
+    @NotBlank(message = "그래프 이름은 필수입니다.")
+    @Size(max = 100, message = "그래프 이름은 100자를 초과할 수 없습니다.")
     @JsonProperty("name")
     private String name;
 
     /**
      * 그래프 설명
+     * 
+     * <p>그래프의 용도와 기능에 대한 설명입니다.</p>
      */
+    @Schema(
+        description = "그래프 설명",
+        example = "고객 문의를 처리하는 대화형 AI 에이전트 그래프",
+        maxLength = 500
+    )
+    @Size(max = 500, message = "그래프 설명은 500자를 초과할 수 없습니다.")
     @JsonProperty("description")
     private String description;
 
     /**
      * 그래프 태그 목록
+     * 
+     * <p>그래프를 분류하기 위한 태그들입니다.</p>
      */
+    @Schema(
+        description = "그래프 태그 목록",
+        example = "[\"chatbot\", \"customer-service\", \"ai\"]"
+    )
     @JsonProperty("tag_list")
     private List<String> tagList;
 
     /**
      * Agent 그래프 데이터
+     * 
+     * <p>그래프의 구조를 정의하는 데이터입니다.</p>
      */
+    @Schema(
+        description = "Agent 그래프 데이터 (노드, 엣지, 변수, 메타데이터 포함)",
+        implementation = AgentGraphData.class
+    )
     @JsonProperty("agent_graph")
     private AgentGraphData agentGraph;
 
     /**
      * 그래프 카테고리
+     * 
+     * <p>그래프의 분류 카테고리입니다.</p>
      */
+    @Schema(
+        description = "그래프 카테고리",
+        example = "chatbot",
+        maxLength = 50
+    )
     @JsonProperty("category")
     private String category;
 

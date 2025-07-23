@@ -62,12 +62,13 @@ private Entity findEntityById(Long id) {
 ```
 ### 5. 공통 기능
 - **RESTful API 설계**: 일관된 REST API 패턴
-- **통합된 응답 포맷**: CustApiResponse 래퍼를 통한 표준화된 응답
+- **통합된 응답 포맷**: CustomApiResponse 래퍼를 통한 표준화된 응답
 - **페이징 처리**: PageResponse를 통한 효율적인 대용량 데이터 처리
 - **예외 처리**: GlobalExceptionHandler를 통한 통합 예외 관리
 - **API 문서화**: OpenAPI 3 기반 자동 문서 생성
 - **입력 검증**: Jakarta Validation을 통한 요청 데이터 검증
 - **로깅**: 구조화된 로깅 및 요청 추적 자동생성
+- **주석**: JavaDoc과 OpenApi 생성
 
 ## API 설계 규칙
 
