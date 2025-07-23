@@ -1,5 +1,7 @@
 package com.skax.aiportal.dto.data.response;
 
+import static com.skax.aiportal.constant.DatasetConstants.*;
+
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -60,7 +62,7 @@ public class DatasetDeleteRes {
         return DatasetDeleteRes.builder()
                 .datasetId(datasetId)
                 .processingTimeMs(processingTimeMs)
-                .statusMessage("데이터셋이 성공적으로 삭제되었습니다.")
+                .statusMessage(DATASET_DELETE_SUCCESS_MESSAGE)
                 .deleteStatus("SOFT_DELETED")
                 .build();
     }

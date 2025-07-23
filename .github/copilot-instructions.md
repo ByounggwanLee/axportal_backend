@@ -69,6 +69,7 @@ private Entity findEntityById(Long id) {
 - **입력 검증**: Jakarta Validation을 통한 요청 데이터 검증
 - **로깅**: 구조화된 로깅 및 요청 추적 자동생성
 - **주석**: JavaDoc과 OpenApi 생성
+- **상수화**: 애플리케이션 상수 클래스를 생성하여 사용
 
 ## API 설계 규칙
 

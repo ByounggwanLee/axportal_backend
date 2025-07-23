@@ -1,5 +1,7 @@
 package com.skax.aiportal.dto.data.response;
 
+import static com.skax.aiportal.constant.DatasetConstants.*;
+
 import com.skax.aiportal.client.sktai.data.dto.response.DatasetResponse;
 
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -62,7 +64,7 @@ public class DatasetCreateRes {
         return DatasetCreateRes.builder()
                 .data(data)
                 .processingTimeMs(processingTimeMs)
-                .statusMessage("데이터셋이 성공적으로 생성되었습니다.")
+                .statusMessage(DATASET_CREATE_SUCCESS_MESSAGE)
                 .datasetId(data != null ? data.getId() : null)
                 .build();
     }

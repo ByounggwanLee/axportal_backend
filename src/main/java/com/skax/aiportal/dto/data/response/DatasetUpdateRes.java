@@ -1,5 +1,7 @@
 package com.skax.aiportal.dto.data.response;
 
+import static com.skax.aiportal.constant.DatasetConstants.*;
+
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -61,7 +63,7 @@ public class DatasetUpdateRes {
         return DatasetUpdateRes.builder()
                 .data(data)
                 .processingTimeMs(processingTimeMs)
-                .statusMessage("데이터셋 정보가 성공적으로 수정되었습니다.")
+                .statusMessage(DATASET_UPDATE_SUCCESS_MESSAGE)
                 .datasetId(datasetId)
                 .build();
     }

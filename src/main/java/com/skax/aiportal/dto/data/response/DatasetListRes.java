@@ -1,5 +1,7 @@
 package com.skax.aiportal.dto.data.response;
 
+import static com.skax.aiportal.constant.DatasetConstants.*;
+
 import com.skax.aiportal.client.sktai.data.dto.response.DatasetListResponse;
 
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -56,7 +58,7 @@ public class DatasetListRes {
         return DatasetListRes.builder()
                 .data(data)
                 .processingTimeMs(processingTimeMs)
-                .statusMessage("데이터셋 목록 조회가 완료되었습니다.")
+                .statusMessage(DATASET_LIST_SUCCESS_MESSAGE)
                 .build();
     }
 

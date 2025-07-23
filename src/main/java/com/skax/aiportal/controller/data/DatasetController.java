@@ -1,5 +1,7 @@
 package com.skax.aiportal.controller.data;
 
+import static com.skax.aiportal.constant.DatasetConstants.*;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -64,12 +66,12 @@ import lombok.extern.slf4j.Slf4j;
  * @version 1.0
  */
 @Tag(
-    name = "Dataset Management API",
-    description = "SKT AI 플랫폼 데이터셋 관리 관련 API"
+    name = API_TAG_NAME,
+    description = API_TAG_DESCRIPTION
 )
 @Slf4j
 @RestController
-@RequestMapping("/api/v1/datasets")
+@RequestMapping(API_BASE_PATH)
 @RequiredArgsConstructor
 public class DatasetController {
 
@@ -78,24 +80,24 @@ public class DatasetController {
     /**
      * 데이터셋 목록 조회
      * 
-     * <p>페이징, 정렬, 필터링, 검색 조건을 적용하여 데이터셋 목록을 조회합니다.
-     * 기본적으로 페이지 크기는 10개이며, 페이지 번호는 1부터 시작합니다.</p>
+     * <p>페이징, 정렬, 검색 조건을 적용하여 데이터셋 목록을 조회합니다.
+     * 프로젝트별 필터링과 키워드 검색을 지원합니다.</p>
      * 
-     * @param page 페이지 번호 (기본값: 1)
-     * @param size 페이지 크기 (기본값: 10)
-     * @param sort 정렬 기준 (예: name:asc, created_at:desc)
-     * @param filter 필터 조건 (예: type:image, status:active)
-     * @param search 검색어 (데이터셋 이름 또는 설명에서 검색)
-     * @return 페이징된 데이터셋 목록
+     * @param page 페이지 번호 (기본값: 0)
+     * @param size 페이지당 아이템 수 (기본값: 20)
+     * @param sortBy 정렬 기준 필드 (기본값: createdAt)
+     * @param projectId 프로젝트 ID 필터
+     * @param searchKeyword 검색 키워드
+     * @return 데이터셋 목록 응답
      */
     @Operation(
-        summary = "데이터셋 목록 조회",
-        description = "페이징, 정렬, 필터링, 검색 조건을 적용하여 데이터셋 목록을 조회합니다."
+        summary = OPERATION_DATASET_LIST,
+        description = OPERATION_DATASET_LIST_DESC
     )
     @ApiResponses({
         @ApiResponse(
             responseCode = "200",
-            description = "데이터셋 목록 조회 성공",
+            description = HTTP_200_DESCRIPTION,
             content = @Content(
                 mediaType = MediaType.APPLICATION_JSON_VALUE,
                 schema = @Schema(implementation = CustomApiResponse.class)
@@ -103,7 +105,7 @@ public class DatasetController {
         ),
         @ApiResponse(
             responseCode = "400",
-            description = "잘못된 요청 - 파라미터 검증 실패",
+            description = HTTP_400_DESCRIPTION,
             content = @Content(
                 mediaType = MediaType.APPLICATION_JSON_VALUE,
                 schema = @Schema(implementation = CustomApiResponse.class)
@@ -111,7 +113,7 @@ public class DatasetController {
         ),
         @ApiResponse(
             responseCode = "500",
-            description = "서버 내부 오류",
+            description = HTTP_500_DESCRIPTION,
             content = @Content(
                 mediaType = MediaType.APPLICATION_JSON_VALUE,
                 schema = @Schema(implementation = CustomApiResponse.class)
@@ -120,38 +122,33 @@ public class DatasetController {
     })
     @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<CustomApiResponse<DatasetListRes>> getDatasets(
-            @Parameter(description = "페이지 번호 (1부터 시작)", example = "1")
-            @RequestParam(value = "page", defaultValue = "1") Integer page,
-            
-            @Parameter(description = "페이지 크기 (1-100)", example = "10")
-            @RequestParam(value = "size", defaultValue = "10") Integer size,
-            
-            @Parameter(description = "정렬 기준 (예: name:asc, created_at:desc)", example = "created_at:desc")
-            @RequestParam(value = "sort", required = false) String sort,
-            
-            @Parameter(description = "필터 조건 (예: type:image, status:active)", example = "type:image")
-            @RequestParam(value = "filter", required = false) String filter,
-            
-            @Parameter(description = "검색어 (데이터셋 이름 또는 설명)", example = "고객 데이터")
-            @RequestParam(value = "search", required = false) String search) {
-        
-        log.info("데이터셋 목록 조회 요청: page={}, size={}, sort={}, filter={}, search={}", 
-                page, size, sort, filter, search);
+            @Parameter(description = PARAM_PAGE_DESCRIPTION) 
+            @RequestParam(defaultValue = "0") int page,
+            @Parameter(description = PARAM_SIZE_DESCRIPTION) 
+            @RequestParam(defaultValue = "20") int size,
+            @Parameter(description = PARAM_SORT_BY_DESCRIPTION) 
+            @RequestParam(defaultValue = DEFAULT_SORT_BY) String sortBy,
+            @Parameter(description = PARAM_PROJECT_ID_DESCRIPTION) 
+            @RequestParam(required = false) String projectId,
+            @Parameter(description = PARAM_SEARCH_KEYWORD_DESCRIPTION) 
+            @RequestParam(required = false) String searchKeyword) {
         
         DatasetListReq request = DatasetListReq.builder()
                 .page(page)
                 .size(size)
-                .sort(sort)
-                .filter(filter)
-                .search(search)
+                .sort(sortBy)
+                .filter(projectId)
+                .search(searchKeyword)
                 .build();
+        
+        log.info(LOG_DATASET_LIST_START, page, size, sortBy, projectId, searchKeyword);
         
         DatasetListRes response = datasetService.getDatasets(request);
         
-        log.info("데이터셋 목록 조회 완료: 처리시간={}ms", response.getProcessingTimeMs());
+        log.info(LOG_DATASET_LIST_SUCCESS, "N/A", response.getProcessingTimeMs());
         
         return ResponseEntity.ok(
-            CustomApiResponse.success(response, "데이터셋 목록 조회가 완료되었습니다.")
+            CustomApiResponse.success(response, DATASET_LIST_SUCCESS_MESSAGE)
         );
     }
 
@@ -159,19 +156,19 @@ public class DatasetController {
      * 데이터셋 생성
      * 
      * <p>새로운 데이터셋을 생성합니다.
-     * 데이터셋 이름, 타입, 설명, 태그, 프로젝트 ID 등의 정보를 설정하여 생성할 수 있습니다.</p>
+     * 데이터셋 메타데이터와 설정 정보를 포함하여 생성할 수 있습니다.</p>
      * 
      * @param request 데이터셋 생성 요청 정보
-     * @return 생성된 데이터셋 정보
+     * @return 데이터셋 생성 응답
      */
     @Operation(
-        summary = "데이터셋 생성",
-        description = "새로운 데이터셋을 생성합니다. 데이터셋 이름, 타입, 프로젝트 ID는 필수입니다."
+        summary = OPERATION_DATASET_CREATE,
+        description = OPERATION_DATASET_CREATE_DESC
     )
     @ApiResponses({
         @ApiResponse(
             responseCode = "201",
-            description = "데이터셋 생성 성공",
+            description = HTTP_201_DESCRIPTION,
             content = @Content(
                 mediaType = MediaType.APPLICATION_JSON_VALUE,
                 schema = @Schema(implementation = CustomApiResponse.class)
@@ -179,15 +176,7 @@ public class DatasetController {
         ),
         @ApiResponse(
             responseCode = "400",
-            description = "잘못된 요청 - 필수 파라미터 누락 또는 유효하지 않은 형식",
-            content = @Content(
-                mediaType = MediaType.APPLICATION_JSON_VALUE,
-                schema = @Schema(implementation = CustomApiResponse.class)
-            )
-        ),
-        @ApiResponse(
-            responseCode = "422",
-            description = "비즈니스 로직 검증 실패",
+            description = HTTP_400_DESCRIPTION,
             content = @Content(
                 mediaType = MediaType.APPLICATION_JSON_VALUE,
                 schema = @Schema(implementation = CustomApiResponse.class)
@@ -195,7 +184,7 @@ public class DatasetController {
         ),
         @ApiResponse(
             responseCode = "500",
-            description = "서버 내부 오류",
+            description = HTTP_500_DESCRIPTION,
             content = @Content(
                 mediaType = MediaType.APPLICATION_JSON_VALUE,
                 schema = @Schema(implementation = CustomApiResponse.class)
@@ -207,16 +196,14 @@ public class DatasetController {
             @Parameter(description = "데이터셋 생성 요청 정보", required = true)
             @Valid @RequestBody DatasetCreateReq request) {
         
-        log.info("데이터셋 생성 요청: name={}, type={}, projectId={}, datasourceId={}", 
-                request.getName(), request.getType(), request.getProjectId(), request.getDatasourceId());
+        log.info(LOG_DATASET_CREATE_START, request.getName(), request.getType(), request.getDatasourceId());
         
         DatasetCreateRes response = datasetService.createDataset(request);
         
-        log.info("데이터셋 생성 완료: datasetId={}, 처리시간={}ms", 
-                response.getDatasetId(), response.getProcessingTimeMs());
+        log.info(LOG_DATASET_CREATE_SUCCESS, response.getDatasetId(), request.getName(), response.getProcessingTimeMs());
         
         return ResponseEntity.status(HttpStatus.CREATED)
-                .body(CustomApiResponse.success(response, "데이터셋이 성공적으로 생성되었습니다."));
+                .body(CustomApiResponse.success(response, DATASET_CREATE_SUCCESS_MESSAGE));
     }
 
     /**

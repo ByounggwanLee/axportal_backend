@@ -1,5 +1,7 @@
 package com.skax.aiportal.service.data.impl;
 
+import static com.skax.aiportal.constant.DatasetConstants.*;
+
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -63,7 +65,7 @@ public class SktDatasetServiceImpl implements DatasetService {
      */
     @Override
     public DatasetListRes getDatasets(DatasetListReq request) {
-        log.info("데이터셋 목록 조회 시작: page={}, size={}, sort={}, filter={}, search={}", 
+        log.info(LOG_DATASET_LIST_START, 
                 request.getPage(), request.getSize(), request.getSort(), request.getFilter(), request.getSearch());
         
         long startTime = System.currentTimeMillis();
@@ -80,14 +82,14 @@ public class SktDatasetServiceImpl implements DatasetService {
             
             long processingTime = System.currentTimeMillis() - startTime;
             
-            log.info("데이터셋 목록 조회 완료: 처리시간={}ms", processingTime);
+            log.info(LOG_DATASET_LIST_SUCCESS, "N/A", processingTime);
             
             return DatasetListRes.success(response, processingTime);
             
         } catch (Exception e) {
             long processingTime = System.currentTimeMillis() - startTime;
-            log.error("데이터셋 목록 조회 실패: 처리시간={}ms, error={}", processingTime, e.getMessage(), e);
-            throw new RuntimeException("데이터셋 목록 조회에 실패했습니다: " + e.getMessage(), e);
+            log.error(LOG_DATASET_LIST_FAILURE, processingTime, e.getMessage(), e);
+            throw new RuntimeException(String.format(DATASET_LIST_ERROR_MESSAGE, e.getMessage()), e);
         }
     }
 
@@ -100,8 +102,8 @@ public class SktDatasetServiceImpl implements DatasetService {
     @Override
     @Transactional
     public DatasetCreateRes createDataset(DatasetCreateReq request) {
-        log.info("데이터셋 생성 시작: name={}, type={}, projectId={}, datasourceId={}", 
-                request.getName(), request.getType(), request.getProjectId(), request.getDatasourceId());
+        log.info(LOG_DATASET_CREATE_START, 
+                request.getName(), request.getType(), request.getDatasourceId());
         
         long startTime = System.currentTimeMillis();
         
@@ -127,15 +129,15 @@ public class SktDatasetServiceImpl implements DatasetService {
             
             long processingTime = System.currentTimeMillis() - startTime;
             
-            log.info("데이터셋 생성 완료: datasetId={}, 처리시간={}ms", response.getId(), processingTime);
+            log.info(LOG_DATASET_CREATE_SUCCESS, response.getId(), request.getName(), processingTime);
             
             return DatasetCreateRes.success(response, processingTime);
             
         } catch (Exception e) {
             long processingTime = System.currentTimeMillis() - startTime;
-            log.error("데이터셋 생성 실패: name={}, 처리시간={}ms, error={}", 
+            log.error(LOG_DATASET_CREATE_FAILURE, 
                     request.getName(), processingTime, e.getMessage(), e);
-            throw new RuntimeException("데이터셋 생성에 실패했습니다: " + e.getMessage(), e);
+            throw new RuntimeException(String.format(DATASET_CREATE_ERROR_MESSAGE, e.getMessage()), e);
         }
     }
 
@@ -146,7 +148,7 @@ public class SktDatasetServiceImpl implements DatasetService {
      */
     @Override
     public DatasetGetRes getDatasetById(DatasetGetReq request) {
-        log.info("데이터셋 상세 조회 시작: datasetId={}", request.getDatasetId());
+        log.info(LOG_DATASET_GET_START, request.getDatasetId());
         
         long startTime = System.currentTimeMillis();
         
@@ -156,15 +158,15 @@ public class SktDatasetServiceImpl implements DatasetService {
             
             long processingTime = System.currentTimeMillis() - startTime;
             
-            log.info("데이터셋 상세 조회 완료: datasetId={}, 처리시간={}ms", request.getDatasetId(), processingTime);
+            log.info(LOG_DATASET_GET_SUCCESS, request.getDatasetId(), response.getName(), processingTime);
             
             return DatasetGetRes.success(response, processingTime);
             
         } catch (Exception e) {
             long processingTime = System.currentTimeMillis() - startTime;
-            log.error("데이터셋 상세 조회 실패: datasetId={}, 처리시간={}ms, error={}", 
+            log.error(LOG_DATASET_GET_FAILURE, 
                     request.getDatasetId(), processingTime, e.getMessage(), e);
-            throw new RuntimeException("데이터셋 조회에 실패했습니다: " + e.getMessage(), e);
+            throw new RuntimeException(String.format(DATASET_GET_ERROR_MESSAGE, e.getMessage()), e);
         }
     }
 
