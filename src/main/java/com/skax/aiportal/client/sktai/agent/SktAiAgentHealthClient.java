@@ -5,6 +5,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 
 import com.skax.aiportal.client.sktai.agent.dto.response.CommonResponse;
 import com.skax.aiportal.client.sktai.config.SktAiClientConfig;
+import com.skax.aiportal.client.sktai.interceptor.SktAiAuthInterceptor;
+import com.skax.aiportal.client.sktai.interceptor.SktAiLoggingInterceptor;
 
 /**
  * SKT AI Agent Health API Feign 클라이언트
@@ -16,11 +18,11 @@ import com.skax.aiportal.client.sktai.config.SktAiClientConfig;
  * @version 1.0
  */
 @FeignClient(
-    name = "skt-ai-agent-health",
-    url = "${skt.ai.agent.url:https://aip-stg.sktai.io}",
-    path = "/api/v1/agent",
-    configuration = SktAiClientConfig.class
-)
+    name = "skt-ai-agent-health", url = "${sktai.api.base-url:https://aip-stg.sktai.io}", configuration = {
+        SktAiClientConfig.class,
+        SktAiAuthInterceptor.class,
+        SktAiLoggingInterceptor.class
+})
 public interface SktAiAgentHealthClient {
 
     /**
