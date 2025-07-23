@@ -1,5 +1,7 @@
 package com.skax.aiportal.service.authorization.impl;
 
+import static com.skax.aiportal.constant.AuthorizationConstants.*;
+
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -11,7 +13,6 @@ import com.skax.aiportal.client.sktai.authorization.dto.request.OAuth2LoginReque
 import com.skax.aiportal.client.sktai.authorization.dto.request.SystemLoginRequest;
 import com.skax.aiportal.client.sktai.authorization.dto.response.AccessTokenResponse;
 import com.skax.aiportal.client.sktai.authorization.dto.response.AccessTokenWithProjectResponse;
-import com.skax.aiportal.constant.AuthConstants;
 import com.skax.aiportal.dto.authorization.request.AuthLoginReq;
 import com.skax.aiportal.dto.authorization.request.AuthLogoutReq;
 import com.skax.aiportal.dto.authorization.request.AuthRefreshTokenReq;
@@ -97,8 +98,8 @@ public class SktAuthenticationServiceImpl implements AuthenticationService {
             
         } catch (Exception e) {
             log.error("OAuth2 로그인 실패: username={}, error={}", request.getUsername(), e.getMessage(), e);
-            throw new AuthenticationException(AuthConstants.LOGIN_ERROR_CODE, 
-                    AuthConstants.LOGIN_ERROR_MESSAGE + ": " + e.getMessage(), e);
+            throw new AuthenticationException(AUTH_LOGIN_ERROR_CODE, 
+                    String.format(AUTH_LOGIN_ERROR_MESSAGE, e.getMessage()), e);
         }
     }
 
@@ -118,7 +119,7 @@ public class SktAuthenticationServiceImpl implements AuthenticationService {
             // 응답 변환
             AuthSsoLoginRes response = AuthSsoLoginRes.builder()
                     .redirectUrl(String.valueOf(clientResponse))
-                    .state(AuthConstants.DEFAULT_SSO_STATE)
+                    .state(DEFAULT_SSO_STATE)
                     .build();
             
             log.info("SSO 로그인 초기화 성공");
@@ -126,8 +127,8 @@ public class SktAuthenticationServiceImpl implements AuthenticationService {
             
         } catch (Exception e) {
             log.error("SSO 로그인 초기화 실패: error={}", e.getMessage(), e);
-            throw new AuthenticationException(AuthConstants.SSO_LOGIN_ERROR_CODE, 
-                    AuthConstants.SSO_LOGIN_ERROR_MESSAGE + ": " + e.getMessage(), e);
+            throw new AuthenticationException(AUTH_SSO_LOGIN_ERROR_CODE, 
+                    String.format(AUTH_SSO_LOGIN_ERROR_MESSAGE, e.getMessage()), e);
         }
     }
 
@@ -148,7 +149,7 @@ public class SktAuthenticationServiceImpl implements AuthenticationService {
             // 응답 변환
             AuthSsoCallbackRes response = AuthSsoCallbackRes.builder()
                     .success(true)
-                    .message(AuthConstants.SSO_SUCCESS_MESSAGE)
+                    .message(AUTH_SSO_LOGIN_SUCCESS_MESSAGE)
                     .userData(String.valueOf(clientResponse))
                     .build();
             
@@ -157,8 +158,8 @@ public class SktAuthenticationServiceImpl implements AuthenticationService {
             
         } catch (Exception e) {
             log.error("SSO 콜백 처리 실패: error={}", e.getMessage(), e);
-            throw new AuthenticationException(AuthConstants.SSO_CALLBACK_ERROR_CODE, 
-                    AuthConstants.SSO_CALLBACK_ERROR_MESSAGE + ": " + e.getMessage(), e);
+            throw new AuthenticationException(AUTH_SSO_CALLBACK_ERROR_CODE, 
+                    String.format(AUTH_SSO_CALLBACK_ERROR_MESSAGE, e.getMessage()), e);
         }
     }
 
@@ -178,8 +179,8 @@ public class SktAuthenticationServiceImpl implements AuthenticationService {
             // 응답 변환
             AuthSamlMetadataRes response = AuthSamlMetadataRes.builder()
                     .metadata(String.valueOf(clientResponse))
-                    .entityId(AuthConstants.DEFAULT_ENTITY_ID)
-                    .ssoUrl(AuthConstants.DEFAULT_SSO_URL)
+                    .entityId(DEFAULT_ENTITY_ID)
+                    .ssoUrl(DEFAULT_SSO_URL)
                     .build();
             
             log.info("SAML 메타데이터 조회 성공");
@@ -187,8 +188,8 @@ public class SktAuthenticationServiceImpl implements AuthenticationService {
             
         } catch (Exception e) {
             log.error("SAML 메타데이터 조회 실패: error={}", e.getMessage(), e);
-            throw new AuthenticationException(AuthConstants.SAML_METADATA_ERROR_CODE, 
-                    AuthConstants.SAML_METADATA_ERROR_MESSAGE + ": " + e.getMessage(), e);
+            throw new AuthenticationException(AUTH_SAML_METADATA_ERROR_CODE, 
+                    String.format(AUTH_SAML_METADATA_ERROR_MESSAGE, e.getMessage()), e);
         }
     }
 
@@ -230,8 +231,8 @@ public class SktAuthenticationServiceImpl implements AuthenticationService {
             
         } catch (Exception e) {
             log.error("시스템 로그인 실패: clientName={}, error={}", request.getClientName(), e.getMessage(), e);
-            throw new AuthenticationException(AuthConstants.SYSTEM_LOGIN_ERROR_CODE, 
-                    AuthConstants.SYSTEM_LOGIN_ERROR_MESSAGE + ": " + e.getMessage(), e);
+            throw new AuthenticationException(AUTH_SYSTEM_LOGIN_ERROR_CODE, 
+                    String.format(AUTH_SYSTEM_LOGIN_ERROR_MESSAGE, e.getMessage()), e);
         }
     }
 
@@ -253,7 +254,7 @@ public class SktAuthenticationServiceImpl implements AuthenticationService {
             // 응답 생성
             AuthLogoutRes response = AuthLogoutRes.builder()
                     .success(true)
-                    .message(AuthConstants.LOGOUT_SUCCESS_MESSAGE)
+                    .message(AUTH_LOGOUT_SUCCESS_MESSAGE)
                     .username(request.getUsername())
                     .build();
             
@@ -262,8 +263,8 @@ public class SktAuthenticationServiceImpl implements AuthenticationService {
             
         } catch (Exception e) {
             log.error("로그아웃 실패: username={}, error={}", request.getUsername(), e.getMessage(), e);
-            throw new AuthenticationException(AuthConstants.LOGOUT_ERROR_CODE, 
-                    AuthConstants.LOGOUT_ERROR_MESSAGE + ": " + e.getMessage(), e);
+            throw new AuthenticationException(AUTH_LOGOUT_ERROR_CODE, 
+                    String.format(AUTH_LOGOUT_ERROR_MESSAGE, e.getMessage()), e);
         }
     }
 
@@ -297,8 +298,8 @@ public class SktAuthenticationServiceImpl implements AuthenticationService {
             
         } catch (Exception e) {
             log.error("토큰 갱신 실패: error={}", e.getMessage(), e);
-            throw new AuthenticationException(AuthConstants.REFRESH_TOKEN_ERROR_CODE, 
-                    AuthConstants.REFRESH_TOKEN_ERROR_MESSAGE + ": " + e.getMessage(), e);
+            throw new AuthenticationException(AUTH_REFRESH_TOKEN_ERROR_CODE, 
+                    String.format(AUTH_REFRESH_TOKEN_ERROR_MESSAGE, e.getMessage()), e);
         }
     }
 
@@ -335,8 +336,8 @@ public class SktAuthenticationServiceImpl implements AuthenticationService {
             
         } catch (Exception e) {
             log.error("토큰 교환 실패: toExchangeClientName={}, error={}", request.getToExchangeClientName(), e.getMessage(), e);
-            throw new AuthenticationException(AuthConstants.TOKEN_EXCHANGE_ERROR_CODE, 
-                    AuthConstants.TOKEN_EXCHANGE_ERROR_MESSAGE + ": " + e.getMessage(), e);
+            throw new AuthenticationException(AUTH_TOKEN_EXCHANGE_ERROR_CODE, 
+                    String.format(AUTH_TOKEN_EXCHANGE_ERROR_MESSAGE, e.getMessage()), e);
         }
     }
 

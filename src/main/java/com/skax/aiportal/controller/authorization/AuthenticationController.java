@@ -1,5 +1,7 @@
 package com.skax.aiportal.controller.authorization;
 
+import static com.skax.aiportal.constant.AuthorizationConstants.*;
+
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -56,12 +58,12 @@ import lombok.extern.slf4j.Slf4j;
  * @version 1.0
  */
 @Tag(
-    name = "Authentication API",
-    description = "SKT AI 플랫폼 인증 관련 API"
+    name = API_TAG_NAME,
+    description = API_TAG_DESCRIPTION
 )
 @Slf4j
 @RestController
-@RequestMapping("/api/v1/auth")
+@RequestMapping(API_BASE_PATH)
 @RequiredArgsConstructor
 public class AuthenticationController {
 
@@ -77,13 +79,13 @@ public class AuthenticationController {
      * @return OAuth2 로그인 응답
      */
     @Operation(
-        summary = "OAuth2 로그인",
-        description = "사용자 이름과 비밀번호를 사용한 OAuth2 패스워드 플로우 로그인을 수행합니다."
+        summary = OPERATION_LOGIN,
+        description = OPERATION_LOGIN_DESC
     )
     @ApiResponses({
         @ApiResponse(
             responseCode = "200",
-            description = "로그인 성공",
+            description = HTTP_200_DESCRIPTION,
             content = @Content(
                 mediaType = MediaType.APPLICATION_JSON_VALUE,
                 schema = @Schema(implementation = CustomApiResponse.class)
@@ -91,7 +93,7 @@ public class AuthenticationController {
         ),
         @ApiResponse(
             responseCode = "400",
-            description = "잘못된 요청 - 필수 파라미터 누락 또는 유효하지 않은 형식",
+            description = HTTP_400_DESCRIPTION,
             content = @Content(
                 mediaType = MediaType.APPLICATION_JSON_VALUE,
                 schema = @Schema(implementation = CustomApiResponse.class)
@@ -99,7 +101,7 @@ public class AuthenticationController {
         ),
         @ApiResponse(
             responseCode = "401",
-            description = "인증 실패 - 잘못된 사용자명 또는 비밀번호",
+            description = HTTP_401_DESCRIPTION,
             content = @Content(
                 mediaType = MediaType.APPLICATION_JSON_VALUE,
                 schema = @Schema(implementation = CustomApiResponse.class)
@@ -107,14 +109,14 @@ public class AuthenticationController {
         ),
         @ApiResponse(
             responseCode = "500",
-            description = "서버 내부 오류",
+            description = HTTP_500_DESCRIPTION,
             content = @Content(
                 mediaType = MediaType.APPLICATION_JSON_VALUE,
                 schema = @Schema(implementation = CustomApiResponse.class)
             )
         )
     })
-    @PostMapping(value = "/login", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    @PostMapping(value = LOGIN_PATH, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<CustomApiResponse<AuthLoginRes>> login(
             @Parameter(description = "OAuth2 로그인 요청 정보", required = true)
             @Valid @RequestBody AuthLoginReq request) {
@@ -222,7 +224,7 @@ public class AuthenticationController {
         log.info("SSO 콜백 처리 성공");
         
         return ResponseEntity.ok(
-            CustomApiResponse.success(response, "SSO 인증이 완료되었습니다.")
+            CustomApiResponse.success(response, AUTH_SSO_CALLBACK_SUCCESS_MESSAGE)
         );
     }
 
@@ -266,7 +268,7 @@ public class AuthenticationController {
         log.info("SAML 메타데이터 조회 성공");
         
         return ResponseEntity.ok(
-            CustomApiResponse.success(response, "SAML 메타데이터 조회가 완료되었습니다.")
+            CustomApiResponse.success(response, AUTH_SAML_METADATA_SUCCESS_MESSAGE)
         );
     }
 
@@ -329,7 +331,7 @@ public class AuthenticationController {
         log.info("시스템 로그인 성공: clientName={}", request.getClientName());
         
         return ResponseEntity.ok(
-            CustomApiResponse.success(response, "시스템 로그인이 성공했습니다.")
+            CustomApiResponse.success(response, AUTH_SYSTEM_LOGIN_SUCCESS_MESSAGE)
         );
     }
 
@@ -384,7 +386,7 @@ public class AuthenticationController {
         log.info("로그아웃 성공: username={}", request.getUsername());
         
         return ResponseEntity.ok(
-            CustomApiResponse.success(response, "로그아웃이 완료되었습니다.")
+            CustomApiResponse.success(response, AUTH_LOGOUT_SUCCESS_MESSAGE)
         );
     }
 
@@ -447,7 +449,7 @@ public class AuthenticationController {
         log.info("토큰 갱신 성공");
         
         return ResponseEntity.ok(
-            CustomApiResponse.success(response, "토큰 갱신이 완료되었습니다.")
+            CustomApiResponse.success(response, AUTH_REFRESH_TOKEN_SUCCESS_MESSAGE)
         );
     }
 
@@ -510,7 +512,7 @@ public class AuthenticationController {
         log.info("토큰 교환 성공: toExchangeClientName={}", request.getToExchangeClientName());
         
         return ResponseEntity.ok(
-            CustomApiResponse.success(response, "토큰 교환이 완료되었습니다.")
+            CustomApiResponse.success(response, AUTH_TOKEN_EXCHANGE_SUCCESS_MESSAGE)
         );
     }
 }
