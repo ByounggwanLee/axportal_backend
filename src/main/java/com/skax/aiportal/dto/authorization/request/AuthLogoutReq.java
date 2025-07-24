@@ -32,7 +32,7 @@ public class AuthLogoutReq {
     /**
      * 로그아웃할 사용자명
      */
-    @Schema(description = "사용자명", example = "testuser", maxLength = 100)
+    @Schema(description = "사용자명", example = "admin", maxLength = 100)
     @NotBlank(message = "사용자명은 필수입니다")
     @Size(max = 100, message = "사용자명은 100자 이하여야 합니다")
     @JsonProperty("username")

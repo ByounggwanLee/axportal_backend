@@ -31,7 +31,7 @@ public class AuthRefreshTokenReq {
     /**
      * 리프레시 토큰
      */
-    @Schema(description = "리프레시 토큰", example = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...", maxLength = 1000)
+    @Schema(description = "리프레시 토큰", example = "로그인에서 획득한 RefrashToken을 복사해서 넣으세요", maxLength = 1000)
     @NotBlank(message = "리프레시 토큰은 필수입니다")
     @Size(max = 1000, message = "리프레시 토큰은 1000자 이하여야 합니다")
     @JsonProperty("refresh_token")
