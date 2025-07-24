@@ -1,5 +1,7 @@
 package com.skax.aiportal.dto.data.request;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;
@@ -39,6 +41,7 @@ public class DatasetListReq {
     )
     @Min(value = 1, message = "페이지 번호는 1 이상이어야 합니다")
     @Builder.Default
+    @JsonProperty("page")
     private Integer page = 1;
 
     /**
@@ -54,6 +57,7 @@ public class DatasetListReq {
     @Min(value = 1, message = "페이지 크기는 1 이상이어야 합니다")
     @Max(value = 100, message = "페이지 크기는 100 이하여야 합니다")
     @Builder.Default
+    @JsonProperty("size")
     private Integer size = 10;
 
     /**
@@ -64,6 +68,7 @@ public class DatasetListReq {
         example = ""
     )
     @Size(max = 100, message = "정렬 기준은 100자 이하여야 합니다")
+    @JsonProperty("sort")
     private String sort;
 
     /**
@@ -74,6 +79,7 @@ public class DatasetListReq {
         example = ""
     )
     @Size(max = 200, message = "필터 조건은 200자 이하여야 합니다")
+    @JsonProperty("filter")
     private String filter;
 
     /**
@@ -84,5 +90,6 @@ public class DatasetListReq {
         example = ""
     )
     @Size(max = 100, message = "검색어는 100자 이하여야 합니다")
+    @JsonProperty("search")
     private String search;
 }
