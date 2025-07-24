@@ -30,7 +30,11 @@ import com.skax.aiportal.dto.data.response.DatasetDeleteRes;
 import com.skax.aiportal.dto.data.response.DatasetGetRes;
 import com.skax.aiportal.dto.data.response.DatasetHardDeleteRes;
 import com.skax.aiportal.dto.data.response.DatasetListRes;
+import com.skax.aiportal.dto.data.response.DatasetPreviewRes;
+import com.skax.aiportal.dto.data.response.DatasetTagDeleteRes;
+import com.skax.aiportal.dto.data.response.DatasetTagUpdateRes;
 import com.skax.aiportal.dto.data.response.DatasetUpdateRes;
+import com.skax.aiportal.dto.data.response.DatasetUploadFileRes;
 import com.skax.aiportal.service.data.DatasetService;
 
 import io.swagger.v3.oas.annotations.Operation;
@@ -101,7 +105,7 @@ public class DatasetController {
     })
     @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<CustomApiResponse<DatasetListRes>> getDatasets(
-            @Parameter(description = "페이지 번호 (0부터 시작)") @RequestParam(name = "page", defaultValue = "0") int page,
+            @Parameter(description = "페이지 번호 (0부터 시작)") @RequestParam(name = "page", defaultValue = "1") int page,
             @Parameter(description = "페이지당 아이템 수") @RequestParam(name = "size", defaultValue = "20") int size,
             @Parameter(description = "정렬 기준 필드") @RequestParam(name = "sortBy", required = false) String sortBy,
             @Parameter(description = "프로젝트 ID로 필터링") @RequestParam(name = "projectId", required = false) String projectId,
@@ -320,19 +324,19 @@ public class DatasetController {
             @ApiResponse(responseCode = "500", description = "서버 내부 오류", content = @Content(mediaType = MediaType.APPLICATION_JSON_VALUE, schema = @Schema(implementation = CustomApiResponse.class)))
     })
     @PostMapping(value = "/upload/files", consumes = MediaType.MULTIPART_FORM_DATA_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<CustomApiResponse<DatasetCreateRes>> uploadFileDataset(
+    public ResponseEntity<CustomApiResponse<DatasetUploadFileRes>> uploadFileDataset(
             @Parameter(description = "파일 업로드 데이터셋 생성 요청 정보", required = true) @Valid DatasetUploadFileReq request) {
 
         log.info("파일 업로드 데이터셋 생성 요청: name={}, type={}, projectId={}",
                 request.getName(), request.getType(), request.getProjectId());
 
-        DatasetCreateRes response = datasetService.uploadFileDataset(request);
+        DatasetUploadFileRes response = datasetService.uploadFileDataset(request);
 
-        log.info("파일 업로드 데이터셋 생성 완료: datasetId={}, 처리시간={}ms",
-                response.getDatasetId(), response.getProcessingTimeMs());
+        log.info("파일 업로드 데이터셋 생성 완료: 처리시간={}ms",
+                response.getProcessingTimeMs());
 
         return ResponseEntity.status(HttpStatus.CREATED)
-                .body(CustomApiResponse.success(response, DATASET_UPLOAD_SUCCESS_MESSAGE));
+                .body(CustomApiResponse.success(response, "파일이 성공적으로 업로드되었습니다."));
     }
 
     /**
@@ -355,7 +359,7 @@ public class DatasetController {
             @ApiResponse(responseCode = "500", description = "서버 내부 오류", content = @Content(mediaType = MediaType.APPLICATION_JSON_VALUE, schema = @Schema(implementation = CustomApiResponse.class)))
     })
     @GetMapping(value = "/{datasetId}/previews", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<CustomApiResponse<Object>> getDatasetPreview(
+    public ResponseEntity<CustomApiResponse<DatasetPreviewRes>> getDatasetPreview(
             @Parameter(description = "미리보기할 데이터셋의 고유 식별자", required = true, example = "01803db6-24bd-4189-9ddd-9b6ca12c36fa") @PathVariable("datasetId") String datasetId,
             @Parameter(description = "미리보기로 가져올 데이터 크기 (행 수)", required = true, example = "100") @RequestParam("chunksize") Integer chunksize) {
 
@@ -366,12 +370,12 @@ public class DatasetController {
                 .chunksize(chunksize)
                 .build();
 
-        Object response = datasetService.getDatasetPreview(request);
+        DatasetPreviewRes response = datasetService.getDatasetPreview(request);
 
         log.info("데이터셋 미리보기 완료: datasetId={}", datasetId);
 
         return ResponseEntity.ok(
-                CustomApiResponse.success(response, DATASET_PREVIEW_SUCCESS_MESSAGE));
+                CustomApiResponse.success(response, "데이터셋 미리보기를 성공적으로 조회했습니다."));
     }
 
     /**
@@ -394,7 +398,7 @@ public class DatasetController {
             @ApiResponse(responseCode = "500", description = "서버 내부 오류", content = @Content(mediaType = MediaType.APPLICATION_JSON_VALUE, schema = @Schema(implementation = CustomApiResponse.class)))
     })
     @PutMapping(value = "/{datasetId}/tags", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<CustomApiResponse<DatasetGetRes>> updateDatasetTags(
+    public ResponseEntity<CustomApiResponse<DatasetTagUpdateRes>> updateDatasetTags(
             @Parameter(description = "태그를 업데이트할 데이터셋의 고유 식별자", required = true, example = "01803db6-24bd-4189-9ddd-9b6ca12c36fa") @PathVariable("datasetId") String datasetId,
             @Parameter(description = "데이터셋 태그 업데이트 요청 정보", required = true) @Valid @RequestBody DatasetTagUpdateReq updateRequest) {
 
@@ -407,13 +411,13 @@ public class DatasetController {
                 .tags(updateRequest.getTags())
                 .build();
 
-        DatasetGetRes response = datasetService.updateDatasetTags(request);
+        DatasetTagUpdateRes response = datasetService.updateDatasetTags(request);
 
         log.info("데이터셋 태그 업데이트 완료: datasetId={}, 처리시간={}ms",
                 datasetId, response.getProcessingTimeMs());
 
         return ResponseEntity.ok(
-                CustomApiResponse.success(response, DATASET_TAG_UPDATE_SUCCESS_MESSAGE));
+                CustomApiResponse.success(response, "데이터셋 태그가 성공적으로 업데이트되었습니다."));
     }
 
     /**
@@ -436,7 +440,7 @@ public class DatasetController {
             @ApiResponse(responseCode = "500", description = "서버 내부 오류", content = @Content(mediaType = MediaType.APPLICATION_JSON_VALUE, schema = @Schema(implementation = CustomApiResponse.class)))
     })
     @DeleteMapping(value = "/{datasetId}/tags", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<CustomApiResponse<DatasetGetRes>> deleteDatasetTags(
+    public ResponseEntity<CustomApiResponse<DatasetTagDeleteRes>> deleteDatasetTags(
             @Parameter(description = "태그를 삭제할 데이터셋의 고유 식별자", required = true, example = "dataset-12345") @PathVariable("datasetId") String datasetId,
 
             @Parameter(description = "데이터셋 태그 삭제 요청 정보", required = true) @Valid @RequestBody DatasetTagDeleteReq deleteRequest) {
@@ -450,12 +454,12 @@ public class DatasetController {
                 .tags(deleteRequest.getTags())
                 .build();
 
-        DatasetGetRes response = datasetService.deleteDatasetTags(request);
+        DatasetTagDeleteRes response = datasetService.deleteDatasetTags(request);
 
         log.info("데이터셋 태그 삭제 완료: datasetId={}, 처리시간={}ms",
                 datasetId, response.getProcessingTimeMs());
 
         return ResponseEntity.ok(
-                CustomApiResponse.success(response, DATASET_TAG_DELETE_SUCCESS_MESSAGE));
+                CustomApiResponse.success(response, "데이터셋 태그가 성공적으로 삭제되었습니다."));
     }
 }

@@ -2,7 +2,10 @@ package com.skax.aiportal.dto.data.response;
 
 import static com.skax.aiportal.constant.DatasetConstants.*;
 
-import com.skax.aiportal.client.sktai.data.dto.response.DatasetListResponse;
+import java.util.List;
+
+import com.skax.aiportal.dto.data.DatasetInfo;
+import com.skax.aiportal.dto.data.DatasetPageInfo;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;
@@ -30,10 +33,16 @@ import lombok.ToString;
 public class DatasetListRes {
 
     /**
-     * SKT AI API 응답 데이터
+     * 데이터셋 목록
      */
-    @Schema(description = "SKT AI API로부터 받은 데이터셋 목록 응답")
-    private DatasetListResponse data;
+    @Schema(description = "데이터셋 목록")
+    private List<DatasetInfo> datasets;
+
+    /**
+     * 페이지네이션 정보
+     */
+    @Schema(description = "페이지네이션 정보")
+    private DatasetPageInfo pageInfo;
 
     /**
      * 응답 처리 시간 (밀리초)
@@ -50,13 +59,15 @@ public class DatasetListRes {
     /**
      * 정적 팩토리 메서드 - 성공 응답 생성
      * 
-     * @param data SKT AI API 응답 데이터
+     * @param datasets 데이터셋 목록
+     * @param pageInfo 페이지네이션 정보
      * @param processingTimeMs 처리 시간
      * @return 성공 응답 객체
      */
-    public static DatasetListRes success(DatasetListResponse data, Long processingTimeMs) {
+    public static DatasetListRes success(List<DatasetInfo> datasets, DatasetPageInfo pageInfo, Long processingTimeMs) {
         return DatasetListRes.builder()
-                .data(data)
+                .datasets(datasets)
+                .pageInfo(pageInfo)
                 .processingTimeMs(processingTimeMs)
                 .statusMessage(DATASET_LIST_SUCCESS_MESSAGE)
                 .build();
@@ -65,14 +76,17 @@ public class DatasetListRes {
     /**
      * 정적 팩토리 메서드 - 성공 응답 생성 (커스텀 메시지)
      * 
-     * @param data SKT AI API 응답 데이터
+     * @param datasets 데이터셋 목록
+     * @param pageInfo 페이지네이션 정보
      * @param processingTimeMs 처리 시간
      * @param statusMessage 상태 메시지
      * @return 성공 응답 객체
      */
-    public static DatasetListRes success(DatasetListResponse data, Long processingTimeMs, String statusMessage) {
+    public static DatasetListRes success(List<DatasetInfo> datasets, DatasetPageInfo pageInfo, 
+                                         Long processingTimeMs, String statusMessage) {
         return DatasetListRes.builder()
-                .data(data)
+                .datasets(datasets)
+                .pageInfo(pageInfo)
                 .processingTimeMs(processingTimeMs)
                 .statusMessage(statusMessage)
                 .build();

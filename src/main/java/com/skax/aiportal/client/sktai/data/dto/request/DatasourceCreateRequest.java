@@ -3,7 +3,8 @@ package com.skax.aiportal.client.sktai.data.dto.request;
 import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.skax.aiportal.client.sktai.data.dto.DataSourceTempFile;
+// TODO: DataSourceTempFile 클래스가 존재하지 않으므로 임시로 주석 처리 또는 클래스 생성 필요
+// import com.skax.aiportal.client.sktai.data.dto.DataSourceTempFile;
 import com.skax.aiportal.client.sktai.data.dto.S3Config;
 
 import jakarta.validation.constraints.NotBlank;
@@ -81,12 +82,16 @@ public class DatasourceCreateRequest {
      */
     @Builder.Default
     private String scope = "public";
-
     /**
      * 임시 파일 목록
+     * TODO: DataSourceTempFile 클래스가 존재하지 않으므로 Object로 임시 처리 (클래스 생성 필요)
+     */
+    /**
+     * 임시 파일 목록
+     * TODO: DataSourceTempFile 클래스가 존재하지 않으므로 Object로 임시 처리 (클래스 생성 필요)
      */
     @JsonProperty("temp_files")
-    private List<DataSourceTempFile> tempFiles;
+    private List<Object> tempFiles;
 
     /**
      * 정책 페이로드

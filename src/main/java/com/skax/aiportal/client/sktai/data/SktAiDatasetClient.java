@@ -55,7 +55,7 @@ public interface SktAiDatasetClient {
         @ApiResponse(responseCode = "200", description = "데이터셋 목록 조회 성공"),
         @ApiResponse(responseCode = "422", description = "요청 데이터 검증 오류")
     })
-    @GetMapping("/api/v1/datasets")
+    @GetMapping(value="/api/v1/datasets", produces = "application/json")
     DatasetListResponse getDatasets(
             @Parameter(description = "페이지 번호")
             @RequestParam(value = "page", defaultValue = "1") int page,

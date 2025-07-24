@@ -14,7 +14,11 @@ import com.skax.aiportal.dto.data.response.DatasetDeleteRes;
 import com.skax.aiportal.dto.data.response.DatasetGetRes;
 import com.skax.aiportal.dto.data.response.DatasetHardDeleteRes;
 import com.skax.aiportal.dto.data.response.DatasetListRes;
+import com.skax.aiportal.dto.data.response.DatasetPreviewRes;
+import com.skax.aiportal.dto.data.response.DatasetTagDeleteRes;
+import com.skax.aiportal.dto.data.response.DatasetTagUpdateRes;
 import com.skax.aiportal.dto.data.response.DatasetUpdateRes;
+import com.skax.aiportal.dto.data.response.DatasetUploadFileRes;
 
 /**
  * 데이터셋 관리 서비스 인터페이스
@@ -126,7 +130,7 @@ public interface DatasetService {
      * @throws com.skax.aiportal.exception.BusinessException 파일 업로드 실패 시
      * @throws com.skax.aiportal.exception.ValidationException 파일 검증 실패 시
      */
-    DatasetCreateRes uploadFileDataset(DatasetUploadFileReq request);
+    DatasetUploadFileRes uploadFileDataset(DatasetUploadFileReq request);
 
     /**
      * 데이터셋 미리보기
@@ -139,7 +143,7 @@ public interface DatasetService {
      * @throws com.skax.aiportal.exception.BusinessException 미리보기 조회 실패 시
      * @throws com.skax.aiportal.exception.NotFoundException 데이터셋을 찾을 수 없을 시
      */
-    Object getDatasetPreview(DatasetPreviewReq request);
+    DatasetPreviewRes getDatasetPreview(DatasetPreviewReq request);
 
     /**
      * 데이터셋 태그 업데이트
@@ -153,7 +157,7 @@ public interface DatasetService {
      * @throws com.skax.aiportal.exception.NotFoundException 데이터셋을 찾을 수 없을 시
      * @throws com.skax.aiportal.exception.ValidationException 태그 검증 실패 시
      */
-    DatasetGetRes updateDatasetTags(DatasetTagUpdateReq request);
+    DatasetTagUpdateRes updateDatasetTags(DatasetTagUpdateReq request);
 
     /**
      * 데이터셋 태그 삭제
@@ -167,5 +171,5 @@ public interface DatasetService {
      * @throws com.skax.aiportal.exception.NotFoundException 데이터셋을 찾을 수 없을 시
      * @throws com.skax.aiportal.exception.ValidationException 태그 검증 실패 시
      */
-    DatasetGetRes deleteDatasetTags(DatasetTagDeleteReq request);
+    DatasetTagDeleteRes deleteDatasetTags(DatasetTagDeleteReq request);
 }

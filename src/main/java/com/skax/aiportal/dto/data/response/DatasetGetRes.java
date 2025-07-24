@@ -1,8 +1,8 @@
 package com.skax.aiportal.dto.data.response;
 
-import static com.skax.aiportal.constant.DatasetConstants.*;
+import static com.skax.aiportal.constant.DatasetConstants.DATASET_GET_SUCCESS_MESSAGE;
 
-import com.skax.aiportal.client.sktai.data.dto.response.DatasetResponse;
+import com.skax.aiportal.dto.data.DatasetInfo;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;
@@ -33,7 +33,7 @@ public class DatasetGetRes {
      * 조회된 데이터셋 정보
      */
     @Schema(description = "조회된 데이터셋의 상세 정보")
-    private DatasetResponse data;
+    private DatasetInfo dataset;
 
     /**
      * 응답 처리 시간 (밀리초)
@@ -56,33 +56,34 @@ public class DatasetGetRes {
     /**
      * 정적 팩토리 메서드 - 성공 응답 생성
      * 
-     * @param data 조회된 데이터셋 정보
+     * @param dataset 조회된 데이터셋 정보
      * @param processingTimeMs 처리 시간
      * @return 성공 응답 객체
      */
-    public static DatasetGetRes success(DatasetResponse data, Long processingTimeMs) {
+    public static DatasetGetRes success(DatasetInfo dataset, Long processingTimeMs) {
         return DatasetGetRes.builder()
-                .data(data)
+                .dataset(dataset)
                 .processingTimeMs(processingTimeMs)
                 .statusMessage(DATASET_GET_SUCCESS_MESSAGE)
-                .datasetId(data != null ? data.getId() : null)
+                .datasetId(dataset != null ? dataset.getId() : null)
                 .build();
     }
 
     /**
      * 정적 팩토리 메서드 - 성공 응답 생성 (커스텀 메시지)
      * 
-     * @param data 조회된 데이터셋 정보
+     * @param dataset 조회된 데이터셋 정보
      * @param processingTimeMs 처리 시간
      * @param statusMessage 상태 메시지
      * @return 성공 응답 객체
      */
-    public static DatasetGetRes success(DatasetResponse data, Long processingTimeMs, String statusMessage) {
+    public static DatasetGetRes success(DatasetInfo dataset, Long processingTimeMs, String statusMessage) {
         return DatasetGetRes.builder()
-                .data(data)
+                .dataset(dataset)
                 .processingTimeMs(processingTimeMs)
                 .statusMessage(statusMessage)
-                .datasetId(data != null ? data.getId() : null)
+                .datasetId(dataset != null ? dataset.getId() : null)
                 .build();
     }
+
 }
