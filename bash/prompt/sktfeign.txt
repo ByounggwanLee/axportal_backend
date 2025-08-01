@@ -1,0 +1,144 @@
+- URL(https://aip-stg.sktai.io/api/v1/agent/openapi.json)를 참조
+ - config, intercept는 /client/sktax/config, /client/sktax/intercept의 생성하여 공통으로 사용하며, 필요시 수정
+ - Feign Client Interface는 접속 엔드포인트별로 Group화하여 /client/sktax/agent 디렉토리에 생성
+ - dto생성
+   - file명은 openapi.json의 명세을 기반으로 생성
+   - file명에 Request, Req, request, req가 포함된 경우 /client/sktax/agent/dto/request에 생성
+   - file명에 Response, Res, response, res가 포함된 경우 /client/sktax/agent/dto/response에 생성
+   - 이외는 /client/sktax/agent/dto/ 기본 디렉토리에 생성
+   - class내부에 inner class는 별도 독립 class로 생성(단, enum class는 예외)
+- 작업완료 후 openapi.json 명세와 비교 누락된 부분은 재생성
+---
+- URL(https://aip-stg.sktai.io/api/v1/common/auth/openapi.json)를 참조 
+ - config, intercept는 /client/sktax/config, /client/sktax/intercept의 생성하여 공통으로 사용하며, 필요시 수정
+ - Feign Client Interface는 접속 엔드포인트별로 Group화하여 /client/sktax/auth 디렉토리에 생성
+ - dto생성
+   - file명은 openapi.json의 명세을 기반으로 생성
+   - file명에 Request, Req, request, req가 포함된 경우 /client/sktax/auth/dto/request에 생성
+   - file명에 Response, Res, response, res가 포함된 경우 /client/sktax/auth/dto/response에 생성
+   - 이외는 /client/sktax/auth/dto/ 기본 디렉토리에 생성
+   - class내부에 inner class는 별도 독립 class로 생성(단, enum class는 예외)
+ - 수행전 coplot-instructions.md과 충돌내용 있으면 확인 요청
+- 작업완료 후 openapi.json 명세와 비교 누락된 부분은 재생성
+---
+- URL(https://aip-stg.sktai.io/api/v1/data/openapi.json)를 참조
+ - config, intercept는 /client/sktax/config, /client/sktax/intercept의 생성하여 공통으로 사용하며, 필요시 수정
+ - Feign Client Interface는 접속 엔드포인트별로 Group화하여 /client/sktax/data 디렉토리에 생성
+ - dto생성
+   - file명은 openapi.json의 명세을 기반으로 생성
+   - file명에 Request, Req, request, req가 포함된 경우 /client/sktax/data/dto/request에 생성
+   - file명에 Response, Res, response, res가 포함된 경우 /client/sktax/data/dto/response에 생성
+   - 이외는 /client/sktax/data/dto/ 기본 디렉토리에 생성
+   - class내부에 inner class는 별도 독립 class로 생성(단, enum class는 예외)
+- 작업완료 후 openapi.json 명세와 비교 누락된 부분은 재생성
+---
+- URL(https://aip-stg.sktai.io/api/v1/evaluation/openapi.json)를 참조
+ - config, intercept는 /client/sktax/config, /client/sktax/intercept의 생성하여 공통으로 사용하며, 필요시 수정
+ - Feign Client Interface는 접속 엔드포인트별로 Group화하여 /client/sktax/evaluation 디렉토리에 생성
+ - dto생성
+   - file명은 openapi.json의 명세을 기반으로 생성
+   - file명에 Request, Req, request, req가 포함된 경우 /client/sktax/evaluation/dto/request에 생성
+   - file명에 Response, Res, response, res가 포함된 경우 /client/sktax/evaluation/dto/response에 생성
+   - 이외는 /client/sktax/evaluation/dto/ 기본 디렉토리에 생성
+   - class내부에 inner class는 별도 독립 class로 생성(단, enum class는 예외)
+- 작업완료 후 openapi.json 명세와 비교 누락된 부분은 재생성
+---
+- URL(https://aip-stg.sktai.io/api/v1/knowledge/openapi.json)를 참조
+ - config, intercept는 /client/sktax/config, /client/sktax/intercept의 생성하여 공통으로 사용하며, 필요시 수정
+ - Feign Client Interface는 접속 엔드포인트별로 Group화하여 /client/sktax/knowledge 디렉토리에 생성
+ - dto생성
+   - file명은 openapi.json의 명세을 기반으로 생성
+   - file명에 Request, Req, request, req가 포함된 경우 /client/sktax/knowledge/dto/request에 생성
+   - file명에 Response, Res, response, res가 포함된 경우 /client/sktax/knowledge/dto/response에 생성
+   - 이외는 /client/sktax/knowledge/dto/ 기본 디렉토리에 생성
+   - class내부에 inner class는 별도 독립 class로 생성(단, enum class는 예외)
+- 작업완료 후 openapi.json 명세와 비교 누락된 부분은 재생성
+---
+- URL(https://aip.sktai.io/api/v1/model/openapi.json)를 참조
+ - config, intercept는 /client/sktax/config, /client/sktax/intercept의 생성하여 공통으로 사용하며, 필요시 수정
+ - Feign Client Interface는 접속 엔드포인트별로 Group화하여 /client/sktax/model 디렉토리에 생성
+ - dto생성
+   - file명은 openapi.json의 명세을 기반으로 생성
+   - file명에 Request, Req, request, req가 포함된 경우 /client/sktax/model/dto/request에 생성
+   - file명에 Response, Res, response, res가 포함된 경우 /client/sktax/model/dto/response에 생성
+   - 이외는 /client/sktax/model/dto/ 기본 디렉토리에 생성
+   - class내부에 inner class는 별도 독립 class로 생성(단, enum class는 예외)
+- 작업완료 후 openapi.json 명세와 비교 누락된 부분은 재생성
+---
+- URL(https://aip-stg.sktai.io/api/v1/management/safety_filter/openapi.json)를 참조
+ - config, intercept는 /client/sktax/config, /client/sktax/intercept의 생성하여 공통으로 사용하며, 필요시 수정
+ - Feign Client Interface는 접속 엔드포인트별로 Group화하여 /client/sktax/safetyfilter 디렉토리에 생성
+ - dto생성
+   - file명은 openapi.json의 명세을 기반으로 생성
+   - file명에 Request, Req, request, req가 포함된 경우 /client/sktax/safetyfilter/dto/request에 생성
+   - file명에 Response, Res, response, res가 포함된 경우 /client/sktax/safetyfilter/dto/response에 생성
+   - 이외는 /client/sktax/safetyfilter/dto/ 기본 디렉토리에 생성
+   - class내부에 inner class는 별도 독립 class로 생성(단, enum class는 예외)
+- 작업완료 후 openapi.json 명세와 비교 누락된 부분은 재생성
+---
+- URL(https://aip-stg.sktai.io/api/v1/finetuning/openapi.json)를 참조
+ - config, intercept는 /client/sktax/config, /client/sktax/intercept의 생성하여 공통으로 사용하며, 필요시 수정
+ - Feign Client Interface는 접속 엔드포인트별로 Group화하여 /client/sktax/finetuning 디렉토리에 생성
+ - dto생성
+   - file명은 openapi.json의 명세을 기반으로 생성
+   - file명에 Request, Req, request, req가 포함된 경우 /client/sktax/finetuning/dto/request에 생성
+   - file명에 Response, Res, response, res가 포함된 경우 /client/sktax/finetuning/dto/response에 생성
+   - 이외는 /client/sktax/finetuning/dto/ 기본 디렉토리에 생성
+   - class내부에 inner class는 별도 독립 class로 생성(단, enum class는 예외)
+- 작업완료 후 openapi.json 명세와 비교 누락된 부분은 재생성
+---
+- URL(https://aip-stg.sktai.io/api/v1/serving/openapi.json)를 참조
+ - config, intercept는 /client/sktax/config, /client/sktax/intercept의 생성하여 공통으로 사용하며, 필요시 수정
+ - Feign Client Interface는 접속 엔드포인트별로 Group화하여 /client/sktax/serving 디렉토리에 생성
+ - dto생성
+   - file명은 openapi.json의 명세을 기반으로 생성
+   - file명에 Request, Req, request, req가 포함된 경우 /client/sktax/serving/dto/request에 생성
+   - file명에 Response, Res, response, res가 포함된 경우 /client/sktax/serving/dto/response에 생성
+   - 이외는 /client/sktax/serving/dto/ 기본 디렉토리에 생성
+   - class내부에 inner class는 별도 독립 class로 생성(단, enum class는 예외)
+- 작업완료 후 openapi.json 명세와 비교 누락된 부분은 재생성
+---
+- URL(https://aip-stg.sktai.io/api/v1/model_gateway/openapi.json)를 참조
+ - config, intercept는 /client/sktax/config, /client/sktax/intercept의 생성하여 공통으로 사용하며, 필요시 수정
+ - Feign Client Interface는 접속 엔드포인트별로 Group화하여 /client/sktax/modelgateway 디렉토리에 생성
+ - dto생성
+   - file명은 openapi.json의 명세을 기반으로 생성
+   - file명에 Request, Req, request, req가 포함된 경우 /client/sktax/modelgateway/dto/request에 생성
+   - file명에 Response, Res, response, res가 포함된 경우 /client/sktax/modelgateway/dto/response에 생성
+   - 이외는 /client/sktax/modelgateway/dto/ 기본 디렉토리에 생성
+   - class내부에 inner class는 별도 독립 class로 생성(단, enum class는 예외)
+- 작업완료 후 openapi.json 명세와 비교 누락된 부분은 재생성
+---
+- URL(https://aip-stg.sktai.io/api/v1/agent_gateway/openapi.json)를 참조
+ - config, intercept는 /client/sktax/config, /client/sktax/intercept의 생성하여 공통으로 사용하며, 필요시 수정
+ - Feign Client Interface는 접속 엔드포인트별로 Group화하여 /client/sktax/agentgateway 디렉토리에 생성
+ - dto생성
+   - file명은 openapi.json의 명세을 기반으로 생성
+   - file명에 Request, Req, request, req가 포함된 경우 /client/sktax/agentgateway/dto/request에 생성
+   - file명에 Response, Res, response, res가 포함된 경우 /client/sktax/agentgateway/dto/response에 생성
+   - 이외는 /client/sktax/agentgateway/dto/ 기본 디렉토리에 생성
+   - class내부에 inner class는 별도 독립 class로 생성(단, enum class는 예외)
+- 작업완료 후 openapi.json 명세와 비교 누락된 부분은 재생성
+---
+- URL(https://aip-stg.sktai.io/api/v1/management/resource/openapi.json)를 참조
+ - config, intercept는 /client/sktax/config, /client/sktax/intercept의 생성하여 공통으로 사용하며, 필요시 수정
+ - Feign Client Interface는 접속 엔드포인트별로 Group화하여 /client/sktax/resource 디렉토리에 생성
+ - dto생성
+   - file명은 openapi.json의 명세을 기반으로 생성
+   - file명에 Request, Req, request, req가 포함된 경우 /client/sktax/resource/dto/request에 생성
+   - file명에 Response, Res, response, res가 포함된 경우 /client/sktax/resource/dto/response에 생성
+   - 이외는 /client/sktax/resource/dto/ 기본 디렉토리에 생성
+   - class내부에 inner class는 별도 독립 class로 생성(단, enum class는 예외)
+- 작업완료 후 openapi.json 명세와 비교 누락된 부분은 재생성
+---
+- URL(https://aip-stg.sktai.io/api/v1/management/history/openapi.json)를 참조
+ - config, intercept는 /client/sktax/config, /client/sktax/intercept의 생성하여 공통으로 사용하며, 필요시 수정
+ - Feign Client Interface는 접속 엔드포인트별로 Group화하여 /client/sktax/history 디렉토리에 생성
+ - dto생성
+   - file명은 openapi.json의 명세을 기반으로 생성
+   - file명에 Request, Req, request, req가 포함된 경우 /client/sktax/history/dto/request에 생성
+   - file명에 Response, Res, response, res가 포함된 경우 /client/sktax/history/dto/response에 생성
+   - 이외는 /client/sktax/history/dto/ 기본 디렉토리에 생성
+   - class내부에 inner class는 별도 독립 class로 생성(단, enum class는 예외)
+- 작업완료 후 openapi.json 명세와 비교 누락된 부분은 재생성
+---
