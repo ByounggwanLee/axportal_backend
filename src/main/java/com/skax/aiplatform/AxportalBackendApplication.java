@@ -3,6 +3,7 @@ package com.skax.aiplatform;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.openfeign.EnableFeignClients;
+import org.springframework.context.annotation.ComponentScan;
 
 /**
  * AxportalBackend 메인 애플리케이션 클래스
@@ -16,6 +17,7 @@ import org.springframework.cloud.openfeign.EnableFeignClients;
  */
 @SpringBootApplication
 @EnableFeignClients
+@ComponentScan(basePackages = {"com.skax.aiplatform"})
 public class AxportalBackendApplication {
 
     public static void main(String[] args) {
