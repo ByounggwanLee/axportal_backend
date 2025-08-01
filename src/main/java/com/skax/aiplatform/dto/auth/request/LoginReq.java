@@ -28,6 +28,6 @@ public class LoginReq {
     private String username;
 
     @NotBlank(message = "비밀번호는 필수입니다")
-    @Schema(description = "비밀번호", example = "password123")
+    @Schema(description = "비밀번호", example = "admin123")
     private String password;
 }

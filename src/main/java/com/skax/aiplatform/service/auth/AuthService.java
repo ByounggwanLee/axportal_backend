@@ -2,7 +2,7 @@ package com.skax.aiplatform.service.auth;
 
 import com.skax.aiplatform.common.security.JwtTokenProvider;
 import com.skax.aiplatform.dto.auth.request.LoginReq;
-import com.skax.aiplatform.dto.auth.request.RefreshTokenReq;
+import com.skax.aiplatform.dto.auth.request.RefeTokenReq;
 import com.skax.aiplatform.dto.auth.response.JwtTokenRes;
 import com.skax.aiplatform.dto.auth.response.UserInfoRes;
 import lombok.extern.slf4j.Slf4j;
@@ -95,7 +95,7 @@ public class AuthService {
      * @param refreshTokenReq 토큰 갱신 요청
      * @return 새로운 JWT 토큰 응답
      */
-    public JwtTokenRes refeToken(RefreshTokenReq refreshTokenReq) {
+    public JwtTokenRes refeToken(RefeTokenReq refreshTokenReq) {
         log.info("토큰 갱신 요청");
 
         try {

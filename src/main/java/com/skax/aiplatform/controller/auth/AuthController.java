@@ -2,7 +2,7 @@ package com.skax.aiplatform.controller.auth;
 
 import com.skax.aiplatform.common.response.AxResponse;
 import com.skax.aiplatform.dto.auth.request.LoginReq;
-import com.skax.aiplatform.dto.auth.request.RefreshTokenReq;
+import com.skax.aiplatform.dto.auth.request.RefeTokenReq;
 import com.skax.aiplatform.dto.auth.response.JwtTokenRes;
 import com.skax.aiplatform.dto.auth.response.UserInfoRes;
 import com.skax.aiplatform.service.auth.AuthService;
@@ -72,7 +72,7 @@ public class AuthController {
             @ApiResponse(responseCode = "400", description = "잘못된 요청 데이터"),
             @ApiResponse(responseCode = "401", description = "유효하지 않은 Refresh Token")
     })
-    public ResponseEntity<AxResponse<JwtTokenRes>> refeToken(@Valid @RequestBody RefreshTokenReq refreshTokenReq) {
+    public ResponseEntity<AxResponse<JwtTokenRes>> refeToken(@Valid @RequestBody RefeTokenReq refreshTokenReq) {
         log.info("토큰 갱신 요청");
 
         JwtTokenRes tokenResponse = authService.refeToken(refreshTokenReq);

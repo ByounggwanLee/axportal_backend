@@ -21,7 +21,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @Builder
 @Schema(description = "토큰 갱신 요청")
-public class RefreshTokenReq {
+public class RefeTokenReq {
 
     @NotBlank(message = "Refresh Token은 필수입니다")
     @Schema(description = "Refresh Token", example = "eyJhbGciOiJIUzUxMiJ9...")
