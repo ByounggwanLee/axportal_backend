@@ -1,16 +1,21 @@
 package com.skax.aiplatform.controller;
 
 import com.skax.aiplatform.common.response.AxResponse;
+import com.skax.aiplatform.common.util.TraceUtils;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.time.LocalDateTime;
+import java.util.HashMap;
 import java.util.Map;
 
 /**
@@ -115,6 +120,64 @@ public class HealthController {
         );
 
         return ResponseEntity.ok(AxResponse.success(systemInfo, "시스템 정보 조회 완료"));
+    }
+
+    /**
+     * 로깅 테스트
+     * 
+     * @return 로깅 테스트 결과
+     */
+    @GetMapping("/logging-test")
+    @Operation(summary = "로깅 테스트", description = "구조화된 로깅 및 추적 기능을 테스트합니다.")
+    public ResponseEntity<AxResponse<Map<String, String>>> loggingTest() {
+        log.debug("DEBUG 레벨 로그 테스트");
+        log.info("INFO 레벨 로그 테스트 - 추적ID: {}", TraceUtils.getTraceId());
+        log.warn("WARN 레벨 로그 테스트");
+        
+        // 컨텍스트 정보가 포함된 에러 로그 테스트
+        try {
+            // 의도적인 예외 발생 (테스트용)
+            if (Math.random() > 0.5) {
+                throw new RuntimeException("로깅 테스트를 위한 샘플 예외");
+            }
+        } catch (Exception e) {
+            TraceUtils.logError("로깅 테스트 중 예외 발생", e,
+                    "controller", "HealthController",
+                    "method", "loggingTest",
+                    "testParam", "sampleValue");
+        }
+        
+        Map<String, String> result = new HashMap<>();
+        result.put("traceId", TraceUtils.getTraceId());
+        result.put("spanId", TraceUtils.getSpanId());
+        result.put("userId", TraceUtils.getUserId());
+        result.put("requestUri", TraceUtils.getRequestUri());
+        result.put("requestMethod", TraceUtils.getRequestMethod());
+        result.put("clientIp", TraceUtils.getClientIp());
+        result.put("message", "다양한 레벨의 로그가 기록되었습니다.");
+        
+        return ResponseEntity.ok(AxResponse.success(result, "로깅 테스트 완료"));
+    }
+
+    /**
+     * JWT 인증 테스트 (보호된 엔드포인트)
+     * 
+     * @return JWT 인증 테스트 결과
+     */
+    @GetMapping("/secure")
+    @Operation(summary = "JWT 인증 테스트", description = "JWT 토큰이 필요한 보호된 엔드포인트입니다.")
+    @SecurityRequirement(name = "bearerAuth")
+    public ResponseEntity<AxResponse<Map<String, String>>> secureEndpoint() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        
+        Map<String, String> result = new HashMap<>();
+        result.put("message", "JWT 인증이 성공했습니다!");
+        result.put("username", authentication.getName());
+        result.put("authorities", authentication.getAuthorities().toString());
+        result.put("traceId", TraceUtils.getTraceId());
+        result.put("timestamp", LocalDateTime.now().toString());
+        
+        return ResponseEntity.ok(AxResponse.success(result, "보호된 리소스에 접근했습니다"));
     }
 
     /**

@@ -23,6 +23,27 @@ spring:
       ddl-auto: create-drop
     show-sql: true
 
+# SpringDoc OpenAPI 설정
+springdoc:
+  api-docs:
+    enabled: true
+    path: /api-docs
+  swagger-ui:
+    enabled: true
+    path: /swagger-ui.html
+    operations-sorter: alpha
+    tags-sorter: alpha
+    try-it-out-enabled: true
+  show-actuator: true
+  default-consumes-media-type: application/json
+  default-produces-media-type: application/json
+
+# JWT 설정
+jwt:
+  secret: myDevSecretKeyForJWTTokenGenerationThatShouldBeAtLeast256BitsLongForSecurityPurposes
+  access-token-validity-in-seconds: 3600    # 1시간
+  refresh-token-validity-in-seconds: 604800 # 7일
+
 # 로깅 레벨
 logging:
   level:

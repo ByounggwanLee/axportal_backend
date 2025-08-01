@@ -39,7 +39,7 @@ public class OpenApiConfig {
     @Value("${server.port:8080}")
     private String serverPort;
 
-    @Value("${server.servlet.context-path:/api/v1}")
+    @Value("${server.servlet.context-path:}")
     private String contextPath;
 
     /**
@@ -81,18 +81,23 @@ public class OpenApiConfig {
      * @return 서버 정보 리스트
      */
     private List<Server> getServers() {
+        String baseUrl = "http://localhost:" + serverPort;
+        if (contextPath != null && !contextPath.isEmpty()) {
+            baseUrl += contextPath;
+        }
+        
         return List.of(
                 new Server()
-                        .url("http://localhost:" + serverPort + contextPath)
+                        .url(baseUrl)
                         .description("로컬 개발 서버"),
                 new Server()
-                        .url("https://api-dev.skax.com" + contextPath)
+                        .url("https://api-dev.skax.com" + (contextPath != null ? contextPath : ""))
                         .description("개발 서버"),
                 new Server()
-                        .url("https://api-staging.skax.com" + contextPath)
+                        .url("https://api-staging.skax.com" + (contextPath != null ? contextPath : ""))
                         .description("스테이징 서버"),
                 new Server()
-                        .url("https://api.skax.com" + contextPath)
+                        .url("https://api.skax.com" + (contextPath != null ? contextPath : ""))
                         .description("운영 서버")
         );
     }

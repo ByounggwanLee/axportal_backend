@@ -13,6 +13,18 @@
 ``` ai prompt
 maven[gradle] wrapper 를 생성해줘
 ```
+3. 실행환경변경
+``` ai prompt
+Run 및 Debug 실행시 외부Local환경으로 설정해줘
+```
+4. 로깅 및 요청 추적 자동생성
+``` ai prompt
+구조화된 로깅 및 요청 추적 자동생성
+```
+5. Jwt인증 및 SpringSecutrity추가
+```
+springsecurity와 jwt인증 추가
+```
 3. CORS 설정
 ``` ai prompt
 CORS를 허용하도록 설정해줘
@@ -20,14 +32,6 @@ CORS를 허용하도록 설정해줘
 4. 샘플 생성
 ``` ai prompt
 CORS를 허용하도록 설정해줘
-```
-5. 실행환경변경
-``` ai prompt
-Run 및 Debug 실행시 외부Local환경으로 설정해줘
-```
-6. Jwt인증 및 SpringSecutrity추가
-```
-springsecurity와 jwt인증 추가
 ```
 7. SktAx FeignClient 및 DTO생성
    - 생성요청

@@ -1,6 +1,11 @@
 package com.skax.aiplatform.config;
 
+import com.skax.aiplatform.common.filter.RequestTraceFilter;
+import lombok.RequiredArgsConstructor;
+import org.springframework.boot.web.servlet.FilterRegistrationBean;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.core.Ordered;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
@@ -16,7 +21,25 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
  * @version 1.0.0
  */
 @Configuration
+@RequiredArgsConstructor
 public class WebConfig implements WebMvcConfigurer {
+
+    private final RequestTraceFilter requestTraceFilter;
+
+    /**
+     * 요청 추적 필터 등록
+     * 
+     * @return 필터 등록 빈
+     */
+    @Bean
+    public FilterRegistrationBean<RequestTraceFilter> requestTraceFilterRegistration() {
+        FilterRegistrationBean<RequestTraceFilter> registration = new FilterRegistrationBean<>();
+        registration.setFilter(requestTraceFilter);
+        registration.addUrlPatterns("/*");
+        registration.setOrder(Ordered.HIGHEST_PRECEDENCE);
+        registration.setName("requestTraceFilter");
+        return registration;
+    }
 
     /**
      * 인터셉터 등록
@@ -32,18 +55,18 @@ public class WebConfig implements WebMvcConfigurer {
     }
 
     /**
-     * CORS 설정 (추가적인 CORS 설정이 필요한 경우)
-     * 주요 CORS 설정은 SecurityConfig에서 처리됨
+     * CORS 설정
      * 
      * @param registry CorsRegistry
      */
     @Override
     public void addCorsMappings(CorsRegistry registry) {
-        registry.addMapping("/**")
+        registry.addMapping("/api/**")
                 .allowedOriginPatterns("*")
                 .allowedMethods("GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS")
                 .allowedHeaders("*")
                 .allowCredentials(true)
+                .exposedHeaders("X-Trace-Id", "X-Span-Id")
                 .maxAge(3600);
     }
 }

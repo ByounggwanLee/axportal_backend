@@ -1,5 +1,9 @@
 package com.skax.aiplatform.config;
 
+import com.skax.aiplatform.common.security.JwtAccessDeniedHandler;
+import com.skax.aiplatform.common.security.JwtAuthenticationEntryPoint;
+import com.skax.aiplatform.common.security.JwtAuthenticationFilter;
+import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
@@ -10,6 +14,7 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
@@ -29,7 +34,12 @@ import java.util.List;
 @Configuration
 @EnableWebSecurity
 @EnableMethodSecurity
+@RequiredArgsConstructor
 public class SecurityConfig {
+
+    private final JwtAuthenticationFilter jwtAuthenticationFilter;
+    private final JwtAuthenticationEntryPoint jwtAuthenticationEntryPoint;
+    private final JwtAccessDeniedHandler jwtAccessDeniedHandler;
 
     /**
      * 보안 필터 체인 설정
@@ -48,33 +58,42 @@ public class SecurityConfig {
                 .cors(cors -> cors.configurationSource(corsConfigurationSource()))
                 
                 // 세션 사용하지 않음 (JWT 기반 인증)
-                .sessionManagement(session -> 
-                        session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+                .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 
-                // 요청 권한 설정
-                .authorizeHttpRequests(auth -> auth
-                        // 인증 없이 접근 가능한 엔드포인트
+                // 예외 처리 설정
+                .exceptionHandling(exceptions -> exceptions
+                        .authenticationEntryPoint(jwtAuthenticationEntryPoint)
+                        .accessDeniedHandler(jwtAccessDeniedHandler))
+                
+                // 요청별 인증 설정
+                .authorizeHttpRequests(authz -> authz
+                        // 공개 엔드포인트
                         .requestMatchers(
+                                "/api/v1/auth/**",
                                 "/health",
                                 "/actuator/**",
                                 "/swagger-ui/**",
                                 "/swagger-ui.html",
                                 "/api-docs/**",
                                 "/v3/api-docs/**",
-                                "/h2-console/**",
-                                "/auth/**",
-                                "/public/**"
+                                "/webjars/**",
+                                "/favicon.ico",
+                                "/error",
+                                "/h2-console/**"
                         ).permitAll()
                         
+                        // 관리자 전용 엔드포인트
+                        .requestMatchers("/api/v1/admin/**").hasRole("ADMIN")
+                        
                         // 나머지 모든 요청은 인증 필요
-                        .anyRequest().authenticated()
-                )
+                        .anyRequest().authenticated())
                 
                 // H2 콘솔 접근을 위한 설정 (개발환경에서만)
-                .headers(headers -> headers.frameOptions(frameOptions -> frameOptions.disable()));
-
-        // TODO: JWT 인증 필터 추가
-        // http.addFilterBefore(jwtAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class);
+                .headers(headers -> headers
+                        .frameOptions(frameOptions -> frameOptions.disable()))
+                
+                // JWT 인증 필터 추가
+                .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
 
         return http.build();
     }
