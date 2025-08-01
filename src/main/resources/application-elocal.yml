@@ -27,16 +27,11 @@ spring:
 springdoc:
   api-docs:
     enabled: true
-    path: /api-docs
   swagger-ui:
     enabled: true
-    path: /swagger-ui.html
-    operations-sorter: alpha
-    tags-sorter: alpha
     try-it-out-enabled: true
   show-actuator: true
-  default-consumes-media-type: application/json
-  default-produces-media-type: application/json
+
 
 # JWT 설정
 jwt:
