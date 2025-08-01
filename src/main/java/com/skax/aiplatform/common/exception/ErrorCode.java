@@ -53,6 +53,14 @@ public enum ErrorCode {
     EXTERNAL_SERVICE_TIMEOUT(HttpStatus.GATEWAY_TIMEOUT, "E002", "외부 서비스 응답 시간 초과입니다"),
     EXTERNAL_SERVICE_UNAVAILABLE(HttpStatus.SERVICE_UNAVAILABLE, "E003", "외부 서비스를 사용할 수 없습니다"),
     
+    // 외부 API 관련 에러
+    EXTERNAL_API_UNAUTHORIZED(HttpStatus.UNAUTHORIZED, "E004", "외부 API 인증 실패"),
+    EXTERNAL_API_FORBIDDEN(HttpStatus.FORBIDDEN, "E005", "외부 API 접근 권한 없음"),
+    EXTERNAL_API_NOT_FOUND(HttpStatus.NOT_FOUND, "E006", "외부 API 리소스 없음"),
+    EXTERNAL_API_BAD_REQUEST(HttpStatus.BAD_REQUEST, "E007", "외부 API 잘못된 요청"),
+    EXTERNAL_API_VALIDATION_ERROR(HttpStatus.UNPROCESSABLE_ENTITY, "E008", "외부 API 유효성 검증 실패"),
+    EXTERNAL_API_SERVER_ERROR(HttpStatus.BAD_GATEWAY, "E009", "외부 API 서버 오류"),
+    
     // 5xx Server Errors
     INTERNAL_SERVER_ERROR(HttpStatus.INTERNAL_SERVER_ERROR, "S001", "서버 내부 오류가 발생했습니다"),
     DATABASE_ERROR(HttpStatus.INTERNAL_SERVER_ERROR, "S002", "데이터베이스 오류가 발생했습니다"),

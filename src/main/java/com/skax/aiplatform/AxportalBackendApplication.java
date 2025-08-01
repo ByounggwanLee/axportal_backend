@@ -16,7 +16,7 @@ import org.springframework.context.annotation.ComponentScan;
  * @version 1.0.0
  */
 @SpringBootApplication
-@EnableFeignClients
+@EnableFeignClients(basePackages = {"com.skax.aiplatform.client"})
 @ComponentScan(basePackages = {"com.skax.aiplatform"})
 public class AxportalBackendApplication {
 

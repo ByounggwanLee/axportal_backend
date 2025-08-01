@@ -1,0 +1,45 @@
+package com.skax.aiplatform.client.sktax.auth.dto;
+
+import com.fasterxml.jackson.annotation.JsonProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+
+/**
+ * 클라이언트 수정 DTO
+ * 
+ * <p>OpenAPI 스키마명: UpdateClient</p>
+ * 
+ * @author ByounggwanLee
+ * @since 2025-08-01
+ * @version 1.0
+ */
+@Getter
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
+@Schema(description = "클라이언트 수정")
+public class UpdateClient {
+
+    @JsonProperty("project_name")
+    @Schema(description = "프로젝트명")
+    private String projectName;
+
+    @JsonProperty("project_description")
+    @Schema(description = "프로젝트 설명")
+    private String projectDescription;
+
+    @JsonProperty("namespace_name")
+    @Schema(description = "네임스페이스명")
+    private String namespaceName;
+
+    @JsonProperty("namespace_description")
+    @Schema(description = "네임스페이스 설명")
+    private String namespaceDescription;
+
+    @JsonProperty("is_active")
+    @Schema(description = "활성 상태")
+    private Boolean isActive;
+}

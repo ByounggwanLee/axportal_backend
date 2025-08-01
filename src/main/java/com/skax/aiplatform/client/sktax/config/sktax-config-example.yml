@@ -1,0 +1,34 @@
+# SKTAX API 설정 예시 (application.yml에 추가)
+# 
+# sktax:
+#   api:
+#     base-url: https://aip-stg.sktai.io
+#     content-type: application/json
+#     user-agent: AXPORTAL-Backend/1.0
+#     timeout:
+#       connect: 5000
+#       read: 30000
+#     auth:
+#       client-id: ${SKTAX_CLIENT_ID:}
+#       client-secret: ${SKTAX_CLIENT_SECRET:}
+#
+# # Feign 로깅 설정
+# logging:
+#   level:
+#     com.skax.aiplatform.client.sktax: DEBUG
+#
+# # Feign 클라이언트 설정
+# feign:
+#   compression:
+#     request:
+#       enabled: true
+#     response:
+#       enabled: true
+#   hystrix:
+#     enabled: false
+#   client:
+#     config:
+#       default:
+#         connectTimeout: 5000
+#         readTimeout: 30000
+#         loggerLevel: full
