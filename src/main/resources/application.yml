@@ -28,8 +28,7 @@ spring:
         format_sql: true
         use_sql_comments: true
         default_batch_fetch_size: 100
-    hibernate:
-      ddl-auto: create-drop
+        ddl-auto: create-drop
 
   # Jackson 설정
   jackson:
@@ -43,6 +42,15 @@ spring:
   # 캐시 설정
   cache:
     type: simple
+
+# CORS 기본 설정 (환경별로 오버라이드 가능)
+cors:
+  allowed-origins: "http://localhost:3000,http://localhost:8080,https://localhost:3000"
+  allowed-methods: "GET,POST,PUT,PATCH,DELETE,OPTIONS,HEAD"
+  allowed-headers: "*"
+  exposed-headers: "Authorization,Content-Type,X-Total-Count,X-Page-Count,X-User-Id,X-Trace-Id"
+  allow-credentials: true
+  max-age: 3600
 
 # 로깅 설정
 logging:

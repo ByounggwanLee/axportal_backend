@@ -25,7 +25,7 @@ Run 및 Debug 실행시 외부Local환경으로 설정해줘
 ```
 springsecurity와 jwt인증 추가
 ```
-3. CORS 설정
+4. CORS 설정
 ``` ai prompt
 CORS를 허용하도록 설정해줘
 ```

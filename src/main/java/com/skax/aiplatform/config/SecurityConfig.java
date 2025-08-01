@@ -15,11 +15,6 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
-import org.springframework.web.cors.CorsConfiguration;
-import org.springframework.web.cors.CorsConfigurationSource;
-import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
-
-import java.util.List;
 
 /**
  * Spring Security 설정
@@ -54,8 +49,8 @@ public class SecurityConfig {
                 // CSRF 비활성화 (JWT 사용으로 인해 불필요)
                 .csrf(AbstractHttpConfigurer::disable)
                 
-                // CORS 설정 활성화
-                .cors(cors -> cors.configurationSource(corsConfigurationSource()))
+                // CORS 설정 활성화 (기본 WebMvcConfigurer 설정 사용)
+                .cors(cors -> {})
                 
                 // 세션 사용하지 않음 (JWT 기반 인증)
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
@@ -70,6 +65,7 @@ public class SecurityConfig {
                         // 공개 엔드포인트
                         .requestMatchers(
                                 "/api/v1/auth/**",
+                                "/api/v1/cors/**",
                                 "/health",
                                 "/actuator/**",
                                 "/swagger-ui/**",
@@ -106,56 +102,5 @@ public class SecurityConfig {
     @Bean
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
-    }
-
-    /**
-     * CORS 설정
-     * 
-     * @return CorsConfigurationSource
-     */
-    @Bean
-    public CorsConfigurationSource corsConfigurationSource() {
-        CorsConfiguration configuration = new CorsConfiguration();
-        
-        // 허용할 오리진 설정
-        configuration.setAllowedOriginPatterns(List.of(
-                "http://localhost:*",
-                "https://*.skax.com",
-                "https://localhost:*"
-        ));
-        
-        // 허용할 HTTP 메서드
-        configuration.setAllowedMethods(List.of(
-                "GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"
-        ));
-        
-        // 허용할 헤더
-        configuration.setAllowedHeaders(List.of(
-                "Authorization",
-                "Content-Type",
-                "X-Requested-With",
-                "Accept",
-                "Origin",
-                "Access-Control-Request-Method",
-                "Access-Control-Request-Headers"
-        ));
-        
-        // 노출할 헤더
-        configuration.setExposedHeaders(List.of(
-                "Access-Control-Allow-Origin",
-                "Access-Control-Allow-Credentials",
-                "Authorization"
-        ));
-        
-        // 자격 증명 허용
-        configuration.setAllowCredentials(true);
-        
-        // 프리플라이트 캐시 시간 (초)
-        configuration.setMaxAge(3600L);
-
-        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
-        source.registerCorsConfiguration("/**", configuration);
-        
-        return source;
     }
 }

@@ -44,6 +44,15 @@ jwt:
   access-token-validity-in-seconds: 3600    # 1시간
   refresh-token-validity-in-seconds: 604800 # 7일
 
+# CORS 설정 (개발 환경용 - 모든 오리진 허용)
+cors:
+  allowed-origins: "*"
+  allowed-methods: "GET,POST,PUT,PATCH,DELETE,OPTIONS,HEAD"
+  allowed-headers: "*"
+  exposed-headers: "Authorization,Content-Type,X-Total-Count,X-Page-Count,X-User-Id,X-Trace-Id"
+  allow-credentials: true
+  max-age: 86400
+
 # 로깅 레벨
 logging:
   level:
