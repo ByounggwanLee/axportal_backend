@@ -79,3 +79,11 @@ Sample 생성해줘
 ```
 mvnw로 컴파일해줘
 ```
+
+** 삭제파일 복구되는 문제 **
+git commit & push 후 "Developer: Reload window"실행 파일 생면
+git restore .
+git clean -fd
+```
+현재 git 변경된 파일 원복해줘
+```
