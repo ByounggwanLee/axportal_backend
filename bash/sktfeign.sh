@@ -30,8 +30,8 @@ do name=$(basename $api | sed 's/_//g')
    echo "  - Feign Client Interface는 접속 엔드포인트별로 Group화하여 /client/sktax/$name 디렉토리에 생성" | tee -a ${result}
    echo "  - dto생성" | tee -a ${result}
    echo "    - file명은 openapi.json의 명세을 기반으로 생성" | tee -a ${result}
-   echo "    - file명에 Request, Req, request, req가 포함된 경우 /client/sktax/$name/dto/request에 생성"| tee -a ${result}
-   echo "    - file명에 Response, Res, response, res가 포함된 경우 /client/sktax/$name/dto/response에 생성" | tee -a ${result}
+   echo "    - file명에 Request, Req, request, req가 글자가 포함된 경우만 /client/sktax/$name/dto/request에 생성"| tee -a ${result}
+   echo "    - file명에 Response, Res, response, res가 포함된 경우만 /client/sktax/$name/dto/response에 생성" | tee -a ${result}
    echo "    - 이외는 /client/sktax/$name/dto/ 기본 디렉토리에 생성" | tee -a ${result}
    echo "    - class내부에 inner class는 별도 독립 class로 생성(단, enum class는 예외)" | tee -a ${result}
    echo "  - 작업시 주의사항" | tee -a ${result}

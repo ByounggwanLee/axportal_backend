@@ -378,7 +378,7 @@ public class UserService {
    - 이외는 기본 디렉토리에 생성
 9. Feign Client에서 사용하는 DTO(/client/** 디렉토리) 생성시 
    - File명에 Req, Request, req, request가 포함된 경우 Request 디렉토리에 생성
-   - File명에 Res, Response, res, response가 포함된 경우 Response 디렉
+   - File명에 Res, Response, res, response가 포함된 경우 Response 디렉토리에 생성
    - 이외는 기본 디렉토리에 생성
 ```
 controller: controller/sample
