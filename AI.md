@@ -54,7 +54,7 @@ Sample 생성해줘
 ```
   - 수행점검
 ```ai prompt
-다시 openapi.json 명세와 비교 누락된 부분은 재생성
+다시한번 openapi.json 명세와 비교 누락된 부분은 재생성
 ```
    - 수행완료 후 재점검
 ```
