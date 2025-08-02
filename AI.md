@@ -36,21 +36,29 @@ Sample 생성해줘
 8. SktAx FeignClient 및 DTO생성
    - 생성요청
 ```
-- URL(https://aip-stg.sktai.io/api/v1/common/auth/openapi.json)를 참조 
- - config, intercept는 /client/sktax/config, /client/sktax/intercept의 생성하여 공통으로 사용하며, 필요시 수정
- - Feign Client Interface는 접속 엔드포인트별로 Group화하여 /client/sktax/auth 디렉토리에 생성
- - dto생성
-   - file명은 openapi.json의 명세을 기반으로 생성
-   - file명에 Request, Req, request, req가 포함된 경우 /client/sktax/auth/dto/request에 생성
-   - file명에 Response, Res, response, res가 포함된 경우 /client/sktax/auth/dto/response에 생성
-   - 이외는 /client/sktax/auth/dto/ 기본 디렉토리에 생성
-   - class내부에 inner class는 별도 독립 class로 생성(단, enum class는 예외)
- - 수행전 coplot-instructions.md과 충돌내용 있으면 확인 요청
+- URL(https://aip-stg.sktai.io/api/v1/common/auth/openapi.json)를 참조
+  - config, intercept는 /client/sktax/config, /client/sktax/intercept의 생성하여 공통으로 사용하며, 필요시 수정
+  - Feign Client Interface는 접속 엔드포인트별로 Group화하여 /client/sktax/auth 디렉토리에 생성
+  - dto생성
+    - file명은 openapi.json의 명세을 기반으로 생성
+    - file명에 Request, Req, request, req가 포함된 경우 /client/sktax/auth/dto/request에 생성
+    - file명에 Response, Res, response, res가 포함된 경우 /client/sktax/auth/dto/response에 생성
+    - 이외는 /client/sktax/auth/dto/ 기본 디렉토리에 생성
+    - class내부에 inner class는 별도 독립 class로 생성(단, enum class는 예외)
+  - 작업시 주의사항
+    - Swagger UI에서 제공하는 예시를 참고하여 DTO를 작성하세요.
+    - 요청 파라미터 및 응답 모델의 필드명은 OpenAPI 명세와 일치해야 합니다.
+    - OpenAPI 명세에 정의된 필드 타입을 정확히 반영해야 합니다.
+  - 수행전 coplot-instructions.md과 충돌내용 있으면 확인 요청
+- 작업완료 후 openapi.json 명세와 비교 누락된 부분은 재생성
 ```
    - 수행완료 후 재점검
 ```
-다생성되지 않은 것 같아 
-- openapi.json 재분석해서 client, dto 생성해줘
+생성된 sktai.auth.** 파일이 URL(https://aip-stg.sktai.io/api/v1/common/auth/openapi.json) 명세와 일치하는 확인
+  - 작업시 주의사항
+    - Swagger UI에서 제공하는 예시를 참고하여 DTO를 작성하세요.
+    - 요청 파라미터 및 응답 모델의 필드명은 OpenAPI 명세와 일치해야 합니다.
+    - OpenAPI 명세에 정의된 필드 타입을 정확히 반영해야 합니다.
 ```   
 
 ## 기타 ##

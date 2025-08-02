@@ -15,6 +15,8 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import jakarta.annotation.PostConstruct;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -36,18 +38,15 @@ public class AuthServiceImpl implements AuthService {
     private final PasswordEncoder passwordEncoder;
 
     // 테스트용 사용자 데이터 (실제로는 데이터베이스에서 조회)
-    private final Map<String, String> testUsers = initTestUsers();
+    private Map<String, String> testUsers;
     private final Map<String, List<String>> userAuthorities = initUserAuthorities();
 
-    /**
-     * 테스트용 사용자 데이터 초기화
-     */
-    private Map<String, String> initTestUsers() {
-        return Map.of(
-                "admin", passwordEncoder.encode("admin123"),
-                "user", passwordEncoder.encode("user123"),
-                "test", passwordEncoder.encode("test123")
-        );
+    @PostConstruct
+    private void initTestData() {
+        testUsers = new HashMap<>();
+        testUsers.put("admin", passwordEncoder.encode("admin123"));
+        testUsers.put("user", passwordEncoder.encode("user123"));
+        testUsers.put("test", passwordEncoder.encode("test123"));
     }
 
     /**
