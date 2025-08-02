@@ -11,7 +11,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 // S3Config 클래스 import (패키지 경로에 맞게 수정 필요)
-import com.skax.aiplatform.client.sktax.data.dto.S3Config;
+
 
 /**
  * DataSource 확장 상세 정보 DTO
