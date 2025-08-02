@@ -1,0 +1,89 @@
+package com.skax.aiplatform.client.sktax.resource.dto;
+
+import com.fasterxml.jackson.annotation.JsonProperty;
+
+import io.swagger.v3.oas.annotations.media.Schema;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+
+/**
+ * 클러스터 리소스 정보
+ * 
+ * <p>클러스터 전체의 리소스 할당량 및 사용량을 정의합니다.</p>
+ * 
+ * @author ByounggwanLee
+ * @since 2025-08-02
+ * @version 1.0
+ */
+@Getter
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
+@Schema(description = "클러스터 리소스 정보")
+public class ClusterResource {
+
+    /**
+     * CPU 총량
+     */
+    @JsonProperty("cpu_total")
+    @Schema(description = "CPU 총량", example = "192")
+    private Double cpuTotal;
+
+    /**
+     * CPU 사용량
+     */
+    @JsonProperty("cpu_used")
+    @Schema(description = "CPU 사용량", example = "24.11")
+    private Double cpuUsed;
+
+    /**
+     * CPU 사용 가능량
+     */
+    @JsonProperty("cpu_usable")
+    @Schema(description = "CPU 사용 가능량", example = "167.89")
+    private Double cpuUsable;
+
+    /**
+     * 메모리 총량
+     */
+    @JsonProperty("memory_total")
+    @Schema(description = "메모리 총량", example = "1258.66")
+    private Double memoryTotal;
+
+    /**
+     * 메모리 사용량
+     */
+    @JsonProperty("memory_used")
+    @Schema(description = "메모리 사용량", example = "65.54")
+    private Double memoryUsed;
+
+    /**
+     * 메모리 사용 가능량
+     */
+    @JsonProperty("memory_usable")
+    @Schema(description = "메모리 사용 가능량", example = "1193.12")
+    private Double memoryUsable;
+
+    /**
+     * GPU 총량
+     */
+    @JsonProperty("gpu_total")
+    @Schema(description = "GPU 총량", example = "16")
+    private Double gpuTotal;
+
+    /**
+     * GPU 사용량
+     */
+    @JsonProperty("gpu_used")
+    @Schema(description = "GPU 사용량", example = "3")
+    private Double gpuUsed;
+
+    /**
+     * GPU 사용 가능량
+     */
+    @JsonProperty("gpu_usable")
+    @Schema(description = "GPU 사용 가능량", example = "13")
+    private Double gpuUsable;
+}
