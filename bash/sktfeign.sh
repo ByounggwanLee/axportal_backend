@@ -8,7 +8,7 @@ skturl=("https://aip-stg.sktai.io/api/v1/agent" \
         "https://aip-stg.sktai.io/api/v1/data" \
         "https://aip-stg.sktai.io/api/v1/evaluation" \
         "https://aip-stg.sktai.io/api/v1/knowledge" \
-        "https://aip.sktai.io/api/v1/model" \
+        "https://aip-stg.sktai.io/api/v1/model" \
         "https://aip-stg.sktai.io/api/v1/management/safety_filter" \
         "https://aip-stg.sktai.io/api/v1/finetuning" \
         "https://aip-stg.sktai.io/api/v1/serving" \
