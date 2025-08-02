@@ -15,8 +15,6 @@ maven[gradle] wrapper 를 생성해줘
 ```
 3. 실행환경변경
 ``` ai prompt
-Run 및 Debug 실행시 외부Local환경으로 설정해줘
-```
 4. 로깅 및 요청 추적 자동생성
 ``` ai prompt
 구조화된 로깅 및 요청 추적 자동생성
