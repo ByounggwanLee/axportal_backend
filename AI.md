@@ -35,7 +35,7 @@ Sample 생성해줘
 ```
 8. SktAx FeignClient 및 DTO생성
    - 생성요청
-```
+``` ai prompt
 - URL(https://aip-stg.sktai.io/api/v1/common/auth/openapi.json)를 참조
   - config, intercept는 /client/sktax/config, /client/sktax/intercept의 생성하여 공통으로 사용하며, 필요시 수정
   - Feign Client Interface는 접속 엔드포인트별로 Group화하여 /client/sktax/auth 디렉토리에 생성
@@ -52,9 +52,13 @@ Sample 생성해줘
   - 수행전 coplot-instructions.md과 충돌내용 있으면 확인 요청
 - 작업완료 후 openapi.json 명세와 비교 누락된 부분은 재생성
 ```
+  - 수행점검
+```ai prompt
+다시 openapi.json 명세와 비교 누락된 부분은 재생성
+```
    - 수행완료 후 재점검
 ```
-생성된 sktai.auth.** 파일이 URL(https://aip-stg.sktai.io/api/v1/common/auth/openapi.json) 명세와 일치하는 확인
+생성된 파일이 OpenAPI 명세와 일치하는지 확인
   - 작업시 주의사항
     - Swagger UI에서 제공하는 예시를 참고하여 DTO를 작성하세요.
     - 요청 파라미터 및 응답 모델의 필드명은 OpenAPI 명세와 일치해야 합니다.
