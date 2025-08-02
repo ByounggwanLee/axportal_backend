@@ -7,21 +7,21 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 /**
- * OpenAPI 명세: GroupBase
- * 그룹 기본 정보
+ * OpenAPI 명세: UpdateNamespace
+ * 네임스페이스 업데이트 요청
  */
 @Getter
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class GroupBase {
+public class UpdateNamespace {
 
-    @JsonProperty("id")
-    private String id;
+    @JsonProperty("cpu_quota")
+    private Double cpuQuota;
 
-    @JsonProperty("name")
-    private String name;
+    @JsonProperty("mem_quota")
+    private Double memQuota;
 
-    @JsonProperty("path")
-    private String path;
+    @JsonProperty("gpu_quota")
+    private Double gpuQuota;
 }

@@ -6,19 +6,18 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import java.util.Map;
+
 /**
- * OpenAPI 명세: UpdateClient
- * 클라이언트 업데이트 요청
+ * OpenAPI 명세: ProjectSidebarMenus
+ * 프로젝트별 사이드바 메뉴 정보
  */
 @Getter
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class UpdateClient {
+public class ProjectSidebarMenus {
 
-    @JsonProperty("project")
-    private UpdateProject project;
-
-    @JsonProperty("namespace")
-    private UpdateNamespace namespace;
+    @JsonProperty("additionalProperties")
+    private Map<String, Object> additionalProperties;
 }

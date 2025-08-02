@@ -7,6 +7,8 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import java.util.List;
+
 /**
  * 사이드바 메뉴 DTO
  * 
@@ -24,38 +26,34 @@ import lombok.NoArgsConstructor;
 public class SidebarMenu {
 
     @JsonProperty("menu_id")
-    @Schema(description = "메뉴 ID")
+    @Schema(description = "메뉴 ID", required = true)
     private Long menuId;
 
     @JsonProperty("menu_name")
-    @Schema(description = "메뉴명")
+    @Schema(description = "메뉴명", required = true)
     private String menuName;
 
-    @JsonProperty("menu_path")
-    @Schema(description = "메뉴 경로")
-    private String menuPath;
+    @JsonProperty("menu_url")
+    @Schema(description = "메뉴 URL")
+    private String menuUrl;
 
     @JsonProperty("menu_icon")
     @Schema(description = "메뉴 아이콘")
     private String menuIcon;
 
     @JsonProperty("parent_menu_id")
-    @Schema(description = "상위 메뉴 ID")
+    @Schema(description = "부모 메뉴 ID")
     private Long parentMenuId;
 
-    @JsonProperty("sort_order")
-    @Schema(description = "정렬 순서")
-    private Integer sortOrder;
+    @JsonProperty("menu_order")
+    @Schema(description = "메뉴 순서")
+    private Integer menuOrder;
 
-    @JsonProperty("is_visible")
-    @Schema(description = "표시 여부")
-    private Boolean isVisible;
+    @JsonProperty("is_active")
+    @Schema(description = "활성 상태", required = true)
+    private Boolean isActive;
 
-    @JsonProperty("permissions")
-    @Schema(description = "필요 권한")
-    private java.util.List<String> permissions;
-
-    @JsonProperty("created_at")
-    @Schema(description = "생성 일시")
-    private String createdAt;
+    @JsonProperty("children")
+    @Schema(description = "하위 메뉴 목록")
+    private List<SidebarMenu> children;
 }

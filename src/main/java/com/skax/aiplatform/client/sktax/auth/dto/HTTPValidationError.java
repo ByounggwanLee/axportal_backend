@@ -6,19 +6,18 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import java.util.List;
+
 /**
- * OpenAPI 명세: UpdateClient
- * 클라이언트 업데이트 요청
+ * OpenAPI 명세: HTTPValidationError
+ * HTTP 검증 오류
  */
 @Getter
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class UpdateClient {
+public class HTTPValidationError {
 
-    @JsonProperty("project")
-    private UpdateProject project;
-
-    @JsonProperty("namespace")
-    private UpdateNamespace namespace;
+    @JsonProperty("detail")
+    private List<ValidationError> detail;
 }

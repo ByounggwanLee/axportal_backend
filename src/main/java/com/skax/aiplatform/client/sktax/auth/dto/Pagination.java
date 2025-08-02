@@ -53,10 +53,6 @@ public class Pagination<T> {
     @Schema(description = "페이지당 항목 수", required = true)
     private Integer itemsPerPage;
 
-    @JsonProperty("data")
-    @Schema(description = "데이터 목록", required = true)
-    private List<T> data;
-
     @JsonProperty("prev_page_url")
     @Schema(description = "이전 페이지 URL")
     private String prevPageUrl;
@@ -68,4 +64,8 @@ public class Pagination<T> {
     @JsonProperty("total")
     @Schema(description = "전체 항목 수", required = true)
     private Integer total;
+
+    @JsonProperty("data")
+    @Schema(description = "데이터 목록")
+    private java.util.List<T> data;
 }

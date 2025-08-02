@@ -6,19 +6,21 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import java.util.List;
+
 /**
- * OpenAPI 명세: UpdateClient
- * 클라이언트 업데이트 요청
+ * OpenAPI 명세: UserGroupMappingsRead
+ * 사용자 그룹 매핑 조회 응답
  */
 @Getter
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class UpdateClient {
+public class UserGroupMappingsRead {
 
-    @JsonProperty("project")
-    private UpdateProject project;
+    @JsonProperty("data")
+    private List<GroupBase> data;
 
-    @JsonProperty("namespace")
-    private UpdateNamespace namespace;
+    @JsonProperty("payload")
+    private Payload payload;
 }

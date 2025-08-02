@@ -23,24 +23,32 @@ import lombok.NoArgsConstructor;
 @Schema(description = "네임스페이스 기본 정보")
 public class NamespaceBase {
 
-    @JsonProperty("namespace_id")
-    @Schema(description = "네임스페이스 ID")
-    private Long namespaceId;
+    @JsonProperty("id")
+    @Schema(description = "네임스페이스 ID", required = true)
+    private String id;
 
-    @JsonProperty("namespace_name")
-    @Schema(description = "네임스페이스명")
-    private String namespaceName;
+    @JsonProperty("name")
+    @Schema(description = "네임스페이스명", required = true)
+    private String name;
 
-    @JsonProperty("namespace_description")
-    @Schema(description = "네임스페이스 설명")
-    private String namespaceDescription;
+    @JsonProperty("description")
+    @Schema(description = "설명")
+    private String description;
 
-    @JsonProperty("project_id")
-    @Schema(description = "프로젝트 ID")
-    private Long projectId;
+    @JsonProperty("cpu_quota")
+    @Schema(description = "CPU 할당량")
+    private Double cpuQuota;
+
+    @JsonProperty("mem_quota")
+    @Schema(description = "메모리 할당량")
+    private Double memQuota;
+
+    @JsonProperty("gpu_quota")
+    @Schema(description = "GPU 할당량")
+    private Double gpuQuota;
 
     @JsonProperty("is_active")
-    @Schema(description = "활성 상태")
+    @Schema(description = "활성 상태", required = true)
     private Boolean isActive;
 
     @JsonProperty("created_at")

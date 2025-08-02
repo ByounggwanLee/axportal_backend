@@ -24,38 +24,42 @@ import lombok.NoArgsConstructor;
 public class ProjectRoleMappingsReadResponse {
 
     @JsonProperty("mapping_id")
-    @Schema(description = "매핑 ID")
-    private Long mappingId;
+    @Schema(description = "매핑 ID", required = true)
+    private String mappingId;
 
     @JsonProperty("project_id")
-    @Schema(description = "프로젝트 ID")
-    private Long projectId;
+    @Schema(description = "프로젝트 ID", required = true)
+    private String projectId;
+
+    @JsonProperty("project_name")
+    @Schema(description = "프로젝트명", required = true)
+    private String projectName;
 
     @JsonProperty("role_id")
-    @Schema(description = "역할 ID")
-    private Long roleId;
+    @Schema(description = "역할 ID", required = true)
+    private String roleId;
 
     @JsonProperty("role_name")
-    @Schema(description = "역할명")
+    @Schema(description = "역할명", required = true)
     private String roleName;
 
     @JsonProperty("user_id")
     @Schema(description = "사용자 ID")
-    private Long userId;
+    private String userId;
 
     @JsonProperty("username")
     @Schema(description = "사용자명")
     private String username;
 
-    @JsonProperty("permissions")
-    @Schema(description = "권한 목록")
-    private java.util.List<String> permissions;
-
     @JsonProperty("is_active")
-    @Schema(description = "활성 상태")
+    @Schema(description = "활성 상태", required = true)
     private Boolean isActive;
 
-    @JsonProperty("assigned_at")
-    @Schema(description = "할당 일시")
-    private String assignedAt;
+    @JsonProperty("created_at")
+    @Schema(description = "생성 일시", required = true)
+    private String createdAt;
+
+    @JsonProperty("updated_at")
+    @Schema(description = "수정 일시")
+    private String updatedAt;
 }

@@ -7,18 +7,15 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 /**
- * OpenAPI 명세: UpdateClient
- * 클라이언트 업데이트 요청
+ * OpenAPI 명세: UpdateProject
+ * 프로젝트 업데이트 요청
  */
 @Getter
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class UpdateClient {
+public class UpdateProject {
 
-    @JsonProperty("project")
-    private UpdateProject project;
-
-    @JsonProperty("namespace")
-    private UpdateNamespace namespace;
+    @JsonProperty("name")
+    private String name;
 }

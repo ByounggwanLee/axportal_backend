@@ -9,17 +9,20 @@ import lombok.NoArgsConstructor;
 import java.time.LocalDateTime;
 
 /**
- * OpenAPI 명세: Namespace
- * 네임스페이스 정보
+ * OpenAPI 명세: CreatedNamespace
+ * 생성된 네임스페이스 정보
  */
 @Getter
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class Namespace {
+public class CreatedNamespace {
 
     @JsonProperty("id")
     private String id;
+
+    @JsonProperty("private_volume_name")
+    private String privateVolumeName;
 
     @JsonProperty("cpu_quota")
     private Double cpuQuota;
@@ -29,27 +32,6 @@ public class Namespace {
 
     @JsonProperty("gpu_quota")
     private Double gpuQuota;
-
-    @JsonProperty("cpu_used")
-    private Double cpuUsed;
-
-    @JsonProperty("mem_used")
-    private Double memUsed;
-
-    @JsonProperty("gpu_used")
-    private Double gpuUsed;
-
-    @JsonProperty("private_volume_name")
-    private String privateVolumeName;
-
-    @JsonProperty("cpu_usable")
-    private Double cpuUsable;
-
-    @JsonProperty("mem_usable")
-    private Double memUsable;
-
-    @JsonProperty("gpu_usable")
-    private Double gpuUsable;
 
     @JsonProperty("name")
     private String name;

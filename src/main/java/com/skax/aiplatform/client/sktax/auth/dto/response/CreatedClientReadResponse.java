@@ -8,7 +8,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 /**
- * 클라이언트 생성 완료 응답 DTO
+ * 클라이언트 생성 응답 DTO
  * 
  * <p>OpenAPI 스키마명: CreatedClientReadResponse</p>
  * 
@@ -20,30 +20,38 @@ import lombok.NoArgsConstructor;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-@Schema(description = "클라이언트 생성 완료 응답")
+@Schema(description = "클라이언트 생성 응답")
 public class CreatedClientReadResponse {
 
     @JsonProperty("client_id")
-    @Schema(description = "클라이언트 ID")
+    @Schema(description = "클라이언트 ID", required = true)
     private String clientId;
 
     @JsonProperty("client_secret")
-    @Schema(description = "클라이언트 시크릿")
+    @Schema(description = "클라이언트 시크릿", required = true)
     private String clientSecret;
 
     @JsonProperty("project_id")
-    @Schema(description = "프로젝트 ID")
-    private Long projectId;
+    @Schema(description = "프로젝트 ID", required = true)
+    private String projectId;
+
+    @JsonProperty("project_name")
+    @Schema(description = "프로젝트명", required = true)
+    private String projectName;
 
     @JsonProperty("namespace_id")
-    @Schema(description = "네임스페이스 ID")
-    private Long namespaceId;
+    @Schema(description = "네임스페이스 ID", required = true)
+    private String namespaceId;
+
+    @JsonProperty("namespace_name")
+    @Schema(description = "네임스페이스명", required = true)
+    private String namespaceName;
 
     @JsonProperty("is_active")
-    @Schema(description = "활성 상태")
+    @Schema(description = "활성 상태", required = true)
     private Boolean isActive;
 
     @JsonProperty("created_at")
-    @Schema(description = "생성 일시")
+    @Schema(description = "생성 일시", required = true)
     private String createdAt;
 }

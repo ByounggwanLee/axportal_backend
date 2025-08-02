@@ -50,7 +50,6 @@ build/
 out/
 
 # SKTAX Data API - 자동 생성 방지
-src/main/java/com/skax/aiplatform/client/sktax/data/
 !**/src/main/**/out/
 !**/src/test/**/out/
 
